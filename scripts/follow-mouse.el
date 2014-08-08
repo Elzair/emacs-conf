@@ -1,4 +1,4 @@
-;;; follow-mouse.el --- Automatically select the window under the mouse -*-unibyte: t; coding: iso-8859-1;-*-
+;;; follow-mouse.el --- Automatically select the window under the mouse -*-coding: raw-text;-*-
 
 ;; Copyright ? 1998,2000,2003 Kevin Rodgers
 
