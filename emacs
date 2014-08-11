@@ -38,8 +38,17 @@
 
 ; configure scheme
 (setq scheme-program-name "mit-scheme")
-(defun scheme-mode-quack-hook () (require 'quack) (setq quack-fontify-style 'emacs))
-(add-hook 'scheme-mode-hook '(scheme-mode-quack-hook rainbow-delimiters-mode))
+(defun my-scheme-mode-hook ()
+  (require 'quack)
+  (setq quack-fontify-style 'emacs)
+  (require 'rainbow-delimiters)
+  (rainbow-delimiters-mode)
+)
+;(require 'rainbow-delimiters)
+;(add-hook 'inferior-scheme-mode-hook 'scheme-mode-quack-hook)
+;(add-hook 'inferior-scheme-mode-hook 'rainbow-delimiters-mode)
+;(add-hook 'inferior-scheme-mode-hook (lambda () (setq defun-prompt-regexp "^[^>]*>+\\s-*")))
+(add-hook 'inferior-scheme-mode-hook 'my-scheme-mode-hook)
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
