@@ -18,6 +18,9 @@
 (require 'nav)
 (require 'load-theme-buffer-local)
 (require 'smart-tab)
+(require 'tern)
+
+;(autoload 'tern-mode "tern.el" nil t)
 
 ; enable/disable certain features
 (scroll-bar-mode -1)              ; disable scroll bar
@@ -29,6 +32,7 @@
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
 (setq ring-bell-function 'ignore) ; stop bell
 (global-smart-tab-mode 1) ; enable smart tabbing
+(global-flycheck-mode)
 
 ; configure SLIME
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
@@ -36,19 +40,31 @@
 ; (setq slime-contribs '(slime-fancy))
 (slime-setup '(slime-fancy slime-asdf slime-banner))
 
-; configure scheme
+; configure scheme repl
 (setq scheme-program-name "mit-scheme")
-(defun my-scheme-mode-hook ()
+(defun my-inferior-scheme-mode-hook ()
   (require 'quack)
   (setq quack-fontify-style 'emacs)
   (require 'rainbow-delimiters)
   (rainbow-delimiters-mode)
 )
-;(require 'rainbow-delimiters)
-;(add-hook 'inferior-scheme-mode-hook 'scheme-mode-quack-hook)
-;(add-hook 'inferior-scheme-mode-hook 'rainbow-delimiters-mode)
-;(add-hook 'inferior-scheme-mode-hook (lambda () (setq defun-prompt-regexp "^[^>]*>+\\s-*")))
-(add-hook 'inferior-scheme-mode-hook 'my-scheme-mode-hook)
+
+; configure scheme files
+(defun my-scheme-mode-hook ()
+  (require 'rainbow-delimiters)
+  (linum-mode)
+  (rainbow-delimiters-mode)
+)
+
+; configure javascript files
+(defun my-js2-mode-hook ()
+  (linum-mode)
+  (tern-mode t))
+
+(add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
+(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'js2-mode-hook 'my-js2-mode-hook)
+
 (require 'smartparens-config)
 (smartparens-global-mode t)
 
