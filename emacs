@@ -17,6 +17,7 @@
 (require 'frame-cmds)
 (require 'nav)
 (require 'load-theme-buffer-local)
+(require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
 
@@ -37,21 +38,29 @@
 ; configure SLIME
 (setq inferior-lisp-program "/usr/local/bin/sbcl")
 (require 'slime-autoloads)
-; (setq slime-contribs '(slime-fancy))
 (slime-setup '(slime-fancy slime-asdf slime-banner))
+; set-up SLIME autocomplete
+(defun my-slime-mode-hook ()
+  (set-up-slime-ac)
+  (rainbow-delimiters-mode))
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes 'slime-repl-mode))
+
+; configure common lisp mode
+(defun my-common-lisp-mode-hook ()
+  (linum-mode)
+  (rainbow-delimiters-mode))
 
 ; configure scheme repl
 (setq scheme-program-name "mit-scheme")
 (defun my-inferior-scheme-mode-hook ()
   (require 'quack)
   (setq quack-fontify-style 'emacs)
-  (require 'rainbow-delimiters)
   (rainbow-delimiters-mode)
 )
 
 ; configure scheme files
 (defun my-scheme-mode-hook ()
-  (require 'rainbow-delimiters)
   (linum-mode)
   (rainbow-delimiters-mode)
 )
@@ -61,6 +70,9 @@
   (linum-mode)
   (tern-mode t))
 
+(add-hook 'slime-mode-hook 'my-slime-mode-hook)
+(add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
+(add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
