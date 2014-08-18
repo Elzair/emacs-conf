@@ -1,14 +1,26 @@
 ; set package list
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("melpa" . "http://melpa.milkbox.net/packages/")
                          ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ("melpa" . "http://melpa.milkbox.net/packages/")))
+                         ))
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts")
 
+; list of installed packages
+(setq package-list '(auto-complete dash evil flycheck goto-chg load-theme-buffer-local nav popup quack rainbow-delimiters slime slime-repl slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
 
 ; initialize packages
 (package-initialize)
+
+; fetch list of available packages
+(unless package-archive-contents 
+  (package-refresh-contents))
+
+; install missing packages
+(dolist (package package-list)
+  (unless (package-installed-p package)
+    (package-install package)))
 
 ; require dependencies
 (require 'follow-mouse)
