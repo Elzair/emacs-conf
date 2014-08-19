@@ -8,7 +8,7 @@
 (add-to-list 'load-path "~/.emacs.d/scripts")
 
 ; list of installed packages
-(setq package-list '(auto-complete dash evil flycheck goto-chg load-theme-buffer-local nav popup quack rainbow-delimiters slime slime-repl slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
+(setq package-list '(auto-complete ac-slime dash evil flycheck goto-chg load-theme-buffer-local nav popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
 
 ; initialize packages
 (package-initialize)
@@ -23,6 +23,7 @@
     (package-install package)))
 
 ; require dependencies
+(require 'ert)
 (require 'follow-mouse)
 (require 'evil)
 (require 'key-chord)
@@ -48,7 +49,11 @@
 (global-flycheck-mode)
 
 ; configure SLIME
-(setq inferior-lisp-program "/usr/local/bin/sbcl")
+(cond
+ ((string-match "darwin" system-configuration)
+  (setq inferior-lisp-program "/usr/local/bin/sbcl"))
+ ((string-match "linux" system-configuration)
+  (setq inferior-lisp-program "/usr/bin/sbcl")))
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-banner))
 ; set-up SLIME autocomplete
@@ -126,6 +131,4 @@
 ; toggle fullscreen on OSX
 (cond
  ((string-match "darwin" system-configuration)
-  (toggle-frame-fullscreen)
- )
-)
+  (toggle-frame-fullscreen)))
