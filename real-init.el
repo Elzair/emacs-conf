@@ -48,8 +48,6 @@
 (defun my-slime-mode-hook ()
   (set-up-slime-ac) ; set-up SLIME autocomplete
   (rainbow-delimiters-mode))
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 ; configure common lisp mode
 (defun my-common-lisp-mode-hook ()
@@ -57,16 +55,28 @@
   (rainbow-delimiters-mode))
 
 ; configure scheme repl
-(setq scheme-program-name "mit-scheme")
+(setq scheme-program-name "guile")
 (defun my-inferior-scheme-mode-hook ()
   (require 'quack)
   (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode))
 
+(defun my-geiser-repl-mode-hook ()
+  (require 'quack)
+  (setq quack-fontify-style 'emacs)
+  (rainbow-delimiters-mode)
+  (ac-geiser-setup))
+
 ; configure scheme files
 (defun my-scheme-mode-hook ()
   (linum-mode)
   (rainbow-delimiters-mode))
+
+; configure geiser
+(defun my-geiser-mode-hook ()
+  (linum-mode)
+  (rainbow-delimiters-mode)
+  (ac-geiser-setup))
 
 ; configure javascript files
 (defun my-js2-mode-hook ()
@@ -89,11 +99,17 @@
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
+(add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
+
+; set up autocomplete modes
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes '(slime-repl-mode geiser-repl-mode)))
 
 (require 'smartparens-config)
 (smartparens-global-mode t)
