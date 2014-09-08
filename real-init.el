@@ -14,28 +14,58 @@
 (require 'flycheck)
 (require 'key-chord)
 (require 'frame-cmds)
-(require 'nav)
 (require 'load-theme-buffer-local)
+(require 'neotree)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
 
+; enable and configure vi emulation
+(global-evil-leader-mode)
+(evil-mode 1)
+(setq key-chord-two-keys-delay 0.5)
+
+; vim-style keybindings
+(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
+(evil-leader/set-leader "-")
+(evil-leader/set-key 
+  "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
+  "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el")))
+(key-chord-mode 1)
+(evil-ex-define-cmd "er" 'eval-region)
+(define-minor-mode geiser-evil-mode
+  "Geiser-Evil mode."
+  :keymap (make-sparse-keymap))
+
+; set default font and theme
+(set-default-font "InconsolataLGC-12")
+(load-theme 'solarized-dark t)
+
 ; enable/disable certain features
-(scroll-bar-mode -1)              ; disable scroll bar
-(horizontal-scroll-bar-mode -1)   ; disable bottom scroll bar
-(tool-bar-mode -1)                ; disable tool bar 
+(scroll-bar-mode -1)                  ; disable scroll bar
+(if (fboundp 'horizontal-scroll-bar-mode)
+  (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
+(tool-bar-mode -1)                    ; disable tool bar 
 (setq initial-scratch-buffer nil)
-(turn-on-follow-mouse)            ; turn on focus follows mouse
+(turn-on-follow-mouse)                ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
 (savehist-mode 1) ; persist minibuffer history across sessions
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
-(setq ring-bell-function 'ignore) ; stop bell
-(global-smart-tab-mode 1) ; enable smart tabbing
+(setq ring-bell-function 'ignore)     ; stop bell
+(global-smart-tab-mode 1)             ; enable smart tabbing
 (global-flycheck-mode)
 
 (eval-after-load 'flycheck
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
+
+; create function for "smart" indenting on lisp repls
+(defun newline-or-eval (repl-newline-and-indent repl-eval)
+  "This function should evaluate an s-expression or create a newline.
+REPL-NEWLINE-AND-INDENT is the repls's equivalent to 'newline-and-indent.
+REPL-EVAL is the repl's function to evaluate an expression."
+  (interactive)
+  (if (eolp) (funcall repl-eval) (funcall repl-newline-and-indent)))
 
 ; configure SLIME
 (cond
@@ -46,7 +76,7 @@
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-banner))
 (defun my-slime-mode-hook ()
-  (set-up-slime-ac) ; set-up SLIME autocomplete
+  (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode))
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes 'slime-repl-mode))
@@ -62,6 +92,31 @@
   (require 'quack)
   (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode))
+
+; configure geiser
+(defun my-geiser-repl-mode-hook ()
+  (require 'quack)
+  (setq geiser-active-implementations 'guile)
+  (setq quack-fontify-style 'emacs)
+  (rainbow-delimiters-mode)
+  (setq geiser-repl-query-on-kill-p nil)
+  (setq geiser-repl-use-other-window nil)
+  (define-key 
+    evil-insert-state-local-map
+    "\C-m"
+    (lambda () 
+      (interactive) 
+      (newline-or-eval 
+       'geiser-repl--newline-and-indent
+       'geiser-repl--maybe-send)))
+  (define-key 
+    evil-insert-state-local-map
+    [return]
+    (lambda () 
+      (interactive) 
+      (newline-or-eval 
+       'geiser-repl--newline-and-indent
+       'geiser-repl--maybe-send))))
 
 ; configure scheme files
 (defun my-scheme-mode-hook ()
@@ -85,8 +140,21 @@
   (linum-mode)
   (rainbow-delimiters-mode))
 
+(defun my-neotree-mode-hook ()
+  (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
+  (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
+  (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
+  (define-key evil-normal-state-local-map (kbd "RET") 'neotree-enter)
+  (define-key evil-normal-state-local-map (kbd "C") 'neotree-change-root)
+  (define-key evil-normal-state-local-map (kbd "R") 'neotree-refresh)
+  (define-key evil-normal-state-local-map (kbd "I") 'neotree-hidden-file-toggle)
+  (key-chord-define evil-normal-state-local-map "ma" 'neotree-create-node)
+  (key-chord-define evil-normal-state-local-map "md" 'neotree-delete-node)
+  (key-chord-define evil-normal-state-local-map "mm" 'neotree-rename-node))
+
 (add-hook 'slime-mode-hook 'my-slime-mode-hook)
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
+(add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
@@ -94,6 +162,7 @@
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
+(add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
 
 (require 'smartparens-config)
 (smartparens-global-mode t)
@@ -110,24 +179,6 @@
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-
-; enable and configure vi emulation
-(global-evil-leader-mode)
-(evil-mode 1)
-(setq key-chord-two-keys-delay 0.5)
-; vim-style keybindings
-(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
-(evil-leader/set-leader "-")
-(evil-leader/set-key 
-  "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el"))
-  "r v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el")))
-(key-chord-mode 1)
-(evil-ex-define-cmd "er" 'eval-region)
-
-; set default font and theme
-(set-default-font "InconsolataLGC-12")
-(load-theme 'solarized-dark t)
-
 ; set default layout
 ;(setq w (selected-window))
 ;(setq w2 (split-window w -16))
@@ -135,7 +186,7 @@
 ;(ansi-term "zsh")
 ;(load-theme-buffer-local 'solarized-light t)
 ;(select-window w)
-(nav)
+(neotree)
 
 ; toggle fullscreen on OSX
 (cond
