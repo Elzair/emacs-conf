@@ -60,7 +60,7 @@
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 ; create function for "smart" indenting on lisp repls
-(defun newline-or-eval (repl-newline-and-indent repl-eval)
+(defun eval-or-newline-and-indent (repl-newline-and-indent repl-eval)
   "This function should evaluate an s-expression or create a newline.
 REPL-NEWLINE-AND-INDENT is the repls's equivalent to 'newline-and-indent.
 REPL-EVAL is the repl's function to evaluate an expression."
@@ -78,8 +78,6 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-slime-mode-hook ()
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode))
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes 'slime-repl-mode))
 
 ; configure common lisp mode
 (defun my-common-lisp-mode-hook ()
@@ -87,7 +85,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (rainbow-delimiters-mode))
 
 ; configure scheme repl
-(setq scheme-program-name "mit-scheme")
+(setq scheme-program-name "guile")
 (defun my-inferior-scheme-mode-hook ()
   (require 'quack)
   (setq quack-fontify-style 'emacs)
@@ -106,7 +104,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
     "\C-m"
     (lambda () 
       (interactive) 
-      (newline-or-eval 
+      (eval-or-newline-and-indent 
        'geiser-repl--newline-and-indent
        'geiser-repl--maybe-send)))
   (define-key 
@@ -114,7 +112,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
     [return]
     (lambda () 
       (interactive) 
-      (newline-or-eval 
+      (eval-or-newline-and-indent 
        'geiser-repl--newline-and-indent
        'geiser-repl--maybe-send))))
 
@@ -122,6 +120,12 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-scheme-mode-hook ()
   (linum-mode)
   (rainbow-delimiters-mode))
+
+; configure geiser
+(defun my-geiser-mode-hook ()
+  (linum-mode)
+  (rainbow-delimiters-mode)
+  (ac-geiser-setup))
 
 ; configure javascript files
 (defun my-js2-mode-hook ()
@@ -157,12 +161,18 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
+(add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
+
+; set up autocomplete modes
+(eval-after-load "auto-complete"
+  '(add-to-list 'ac-modes '(slime-repl-mode geiser-repl-mode)))
 
 (require 'smartparens-config)
 (smartparens-global-mode t)
