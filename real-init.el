@@ -31,7 +31,7 @@
 (evil-leader/set-key 
   "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
   "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el"))
-  "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add . &&git commit -m 'Updated emacs config' && git pull && git push")))
+  "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
 (key-chord-mode 1)
 (evil-ex-define-cmd "er" 'eval-region)
 (define-minor-mode geiser-evil-mode
