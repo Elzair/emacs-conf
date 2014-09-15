@@ -3,12 +3,12 @@
 ;;; This is my personal start-up file for Emacs.
 ;;; Code:
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")
                          ))
 
 ; list of installed packages
-(setq package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
+(setq package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree org popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
 
 ; initialize packages
 (package-initialize)

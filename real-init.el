@@ -8,7 +8,7 @@
 
 ; require dependencies
 (require 'ert)
-(require 'follow-mouse)
+;(require 'follow-mouse)
 (require 'evil)
 (require 'evil-leader)
 (require 'flycheck)
@@ -30,7 +30,8 @@
 (evil-leader/set-leader "-")
 (evil-leader/set-key 
   "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
-  "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el")))
+  "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el"))
+  "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add . &&git commit -m 'Updated emacs config' && git pull && git push")))
 (key-chord-mode 1)
 (evil-ex-define-cmd "er" 'eval-region)
 (define-minor-mode geiser-evil-mode
@@ -47,7 +48,7 @@
   (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
 (tool-bar-mode -1)                    ; disable tool bar 
 (setq initial-scratch-buffer nil)
-(turn-on-follow-mouse)                ; turn on focus follows mouse
+;(turn-on-follow-mouse)                ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
 (savehist-mode 1) ; persist minibuffer history across sessions
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
@@ -188,6 +189,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
 ; set directory to save backup files
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+
+; enable focus follows mouse
+(setq mouse-autoselect-window t)
 
 ; set default layout
 ;(setq w (selected-window))
