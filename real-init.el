@@ -133,6 +133,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (linum-mode)
   (tern-mode t))
 
+(defun my-inferior-elisp-mode-hook ()
+  (rainbow-delimiters-mode))
+
 (defun my-emacs-lisp-mode-hook ()
   (linum-mode)
   (rainbow-delimiters-mode))
