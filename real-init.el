@@ -28,7 +28,7 @@
 ; vim-style keybindings
 (key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
 (evil-leader/set-leader "-")
-(evil-leader/set-key 
+(evil-leader/set-key
   "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
   "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el"))
   "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
@@ -46,7 +46,7 @@
 (scroll-bar-mode -1)                  ; disable scroll bar
 (if (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
-(tool-bar-mode -1)                    ; disable tool bar 
+(tool-bar-mode -1)                    ; disable tool bar
 (setq initial-scratch-buffer nil)
 (setq mouse-autoselect-window t)      ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
@@ -77,78 +77,113 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-banner))
 (defun my-slime-mode-hook ()
+  "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode))
 
 ; configure common lisp mode
 (defun my-common-lisp-mode-hook ()
+  "My cl-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
 
 ; configure scheme repl
 (setq scheme-program-name "guile")
 (defun my-inferior-scheme-mode-hook ()
+  "My ism-repl-mode-hook."
   (require 'quack)
   (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode))
 
 ; configure geiser
 (defun my-geiser-repl-mode-hook ()
+  "My geiser-repl-mode-hook."
   (require 'quack)
   (setq geiser-active-implementations 'guile)
   (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode)
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
-  (define-key 
+  (define-key
     evil-insert-state-local-map
     "\C-m"
-    (lambda () 
-      (interactive) 
-      (eval-or-newline-and-indent 
+    (lambda ()
+      (interactive)
+      (eval-or-newline-and-indent
        'geiser-repl--newline-and-indent
        'geiser-repl--maybe-send)))
-  (define-key 
+  (define-key
     evil-insert-state-local-map
     [return]
-    (lambda () 
-      (interactive) 
-      (eval-or-newline-and-indent 
+    (lambda ()
+      (interactive)
+      (eval-or-newline-and-indent
        'geiser-repl--newline-and-indent
        'geiser-repl--maybe-send))))
 
+(defun my-inferior-emacs-lisp-mode-hook ()
+  "My ielm-mode-hook."
+  (rainbow-delimiters-mode)
+  (setq ac-sources '(ac-source-functions
+                     ac-source-variables
+                     ac-source-features
+                     ac-source-symbols
+                     ac-source-words-in-same-mode-buffers))
+  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
+  (auto-complete-mode 1)
+  (define-key
+    evil-insert-state-local-map
+    "\C-m"
+    (lambda ()
+      (interactive)
+      (eval-or-newline-and-indent
+       'newline-and-indent
+       'ielm-return)))
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    (lambda ()
+      (interactive)
+      (eval-or-newline-and-indent
+       'newline-and-indent
+       'ielm-return))))
+
 ; configure scheme files
 (defun my-scheme-mode-hook ()
+  "My scheme-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
 
 ; configure geiser
 (defun my-geiser-mode-hook ()
+  "My geiser-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode)
   (ac-geiser-setup))
 
 ; configure javascript files
 (defun my-js2-mode-hook ()
+  "My javascript-mode-hook."
   (linum-mode)
   (tern-mode t))
 
-(defun my-inferior-elisp-mode-hook ()
-  (rainbow-delimiters-mode))
-
 (defun my-emacs-lisp-mode-hook ()
+  "My elisp-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
 
 (defun my-clojure-mode-hook ()
+  "My clojure-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
 
 (defun my-clojurescript-mode-hook ()
+  "My clojurescript-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
 
 (defun my-neotree-mode-hook ()
+  "My neotree-mode-hook."
   (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
   (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
   (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
@@ -166,6 +201,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
+(add-hook 'inferior-emacs-lisp-mode-hook 'my-inferior-emacs-lisp-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
@@ -195,10 +231,23 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 (neotree)
 
-; toggle fullscreen on OSX
+; fullscreen mode
+(defun toggle-full-screen ()
+  "This function will toggle fullscreen mode."
+  (interactive)
+  (cond
+   ((string-match "darwin" system-configuration)
+    (toggle-frame-fullscreen))
+   ((string-match "linux" system-configuration)
+    (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))))
+
+; map F11 to fullscreen
+(global-set-key [f11] 'toggle-full-screen)
+
+; enable fullscreen by default on OSX
 (cond
  ((string-match "darwin" system-configuration)
-  (toggle-frame-fullscreen)))
+  (toggle-full-screen)))
 
 (provide 'real-init)
 ;;; real-init ends here
