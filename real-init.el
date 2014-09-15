@@ -48,7 +48,7 @@
   (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
 (tool-bar-mode -1)                    ; disable tool bar 
 (setq initial-scratch-buffer nil)
-;(turn-on-follow-mouse)                ; turn on focus follows mouse
+(setq mouse-autoselect-window t)      ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
 (savehist-mode 1) ; persist minibuffer history across sessions
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
@@ -180,7 +180,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 ; set indentation options
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
+(setq-default tab-width 2)
 
 ; enable autocompletion popup
 (require 'auto-complete-config)
@@ -190,16 +190,6 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-; enable focus follows mouse
-(setq mouse-autoselect-window t)
-
-; set default layout
-;(setq w (selected-window))
-;(setq w2 (split-window w -16))
-;(select-window w2)
-;(ansi-term "zsh")
-;(load-theme-buffer-local 'solarized-light t)
-;(select-window w)
 (neotree)
 
 ; toggle fullscreen on OSX
