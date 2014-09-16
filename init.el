@@ -8,7 +8,7 @@
                          ))
 
 ; list of installed packages
-(setq package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree org popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
+(setq package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree org org-present popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree))
 
 ; initialize packages
 (package-initialize)

@@ -231,23 +231,35 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 (neotree)
 
-; fullscreen mode
-(defun toggle-full-screen ()
-  "This function will toggle fullscreen mode."
+(defvar saved-mode-line-format nil)
+(defvar show-menu-bar 1)
+(defun presentation ()
+  "This function will toggle presentation mode."
   (interactive)
-  (cond
-   ((string-match "darwin" system-configuration)
-    (toggle-frame-fullscreen))
-   ((string-match "linux" system-configuration)
-    (shell-command "wmctrl -r :ACTIVE: -btoggle,fullscreen"))))
+  (progn
+    (toggle-frame-fullscreen)
+    (if (eq saved-mode-line-format nil)
+        (progn
+          (neotree-hide)
+          (setq saved-mode-line-format (list mode-line-format))
+          (print saved-mode-line-format)
+          (print "Entering fullscreen!")
+          (setq mode-line-format nil))
+        (print saved-mode-line-format)
+        (print "Leaving fullscreen!")
+        (setq mode-line-format saved-mode-line-format)
+        (setq saved-mode-line-format nil)
+        (neotree-show))
+    (setq show-menu-bar (- show-menu-bar))
+    (menu-bar-mode show-menu-bar)))
 
 ; map F11 to fullscreen
-(global-set-key [f11] 'toggle-full-screen)
+(global-set-key [f11] 'presentation)
 
 ; enable fullscreen by default on OSX
 (cond
  ((string-match "darwin" system-configuration)
-  (toggle-full-screen)))
+  (toggle-frame-fullscreen)))
 
 (provide 'real-init)
 ;;; real-init ends here
