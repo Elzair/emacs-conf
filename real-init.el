@@ -11,6 +11,7 @@
 ;(require 'follow-mouse)
 (require 'evil)
 (require 'evil-leader)
+(require 'evil-map)
 (require 'flycheck)
 (require 'key-chord)
 (require 'frame-cmds)
@@ -165,7 +166,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-js2-mode-hook ()
   "My javascript-mode-hook."
   (linum-mode)
-  (tern-mode t))
+  (tern-mode t)
+  (declare-abbrevs (evil-insert-js-mode-abbrev-table)
+                   (("iff" "if () {\n}" "<escape> k $ 2 h i"))))
 
 (defun my-emacs-lisp-mode-hook ()
   "My elisp-mode-hook."
@@ -181,6 +184,17 @@ REPL-EVAL is the repl's function to evaluate an expression."
   "My clojurescript-mode-hook."
   (linum-mode)
   (rainbow-delimiters-mode))
+
+; configure org-present
+(defun my-org-present-mode-hook ()
+  "My org-pesent-mode hook."
+  (org-present-big)
+  (org-display-inline-images))
+
+(defun my-org-present-mode-quit-hook ()
+  "My org-present-mode-quit hook."
+  (org-present-small)
+  (org-remove-inline-images))
 
 (defun my-neotree-mode-hook ()
   "My neotree-mode-hook."
@@ -208,6 +222,8 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
+(add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
+(add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
 
 ; set up autocomplete modes
