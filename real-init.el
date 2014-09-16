@@ -121,7 +121,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
        'geiser-repl--newline-and-indent
        'geiser-repl--maybe-send))))
 
-(defun my-inferior-emacs-lisp-mode-hook ()
+(defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
   (rainbow-delimiters-mode)
   (setq ac-sources '(ac-source-functions
@@ -201,7 +201,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
-(add-hook 'inferior-emacs-lisp-mode-hook 'my-inferior-emacs-lisp-mode-hook)
+(add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
