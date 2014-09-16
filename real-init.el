@@ -232,6 +232,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (neotree)
 
 (defvar saved-mode-line-format nil)
+(defvar saved-window-linum-mode 1)
 (defvar show-menu-bar 1)
 (defun presentation ()
   "This function will toggle presentation mode."
@@ -242,14 +243,13 @@ REPL-EVAL is the repl's function to evaluate an expression."
         (progn
           (neotree-hide)
           (setq saved-mode-line-format (list mode-line-format))
-          (print saved-mode-line-format)
-          (print "Entering fullscreen!")
           (setq mode-line-format nil))
-        (print saved-mode-line-format)
-        (print "Leaving fullscreen!")
         (setq mode-line-format saved-mode-line-format)
         (setq saved-mode-line-format nil)
-        (neotree-show))
+        (neotree-show)
+        (other-window 1))
+    (setq saved-window-linum-mode (- saved-window-linum-mode))
+    (linum-mode saved-window-linum-mode)
     (setq show-menu-bar (- show-menu-bar))
     (menu-bar-mode show-menu-bar)))
 
