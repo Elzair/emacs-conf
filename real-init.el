@@ -3,6 +3,15 @@
 ;;; This is my real personal start-up file for Emacs.
 ;;; Code:
 
+(defun emacs-welcome ()
+  "This function will print a welcome message in *scratch*."
+  (progn
+    (other-window 1)
+    (animate-string (concat ";; Welcome to "
+                            (substring (emacs-version) 0 16)
+                            ".")
+                    0 1)))
+
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
@@ -21,6 +30,7 @@
 (require 'smart-tab)
 (require 'tern)
 
+
 ; enable and configure vi emulation
 (global-evil-leader-mode)
 (evil-mode 1)
@@ -28,6 +38,9 @@
 
 ; vim-style keybindings
 (key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jj" (lambda ()
+                                               (interactive)
+                                               (evil-forward-char 1)))
 (evil-leader/set-leader "-")
 (evil-leader/set-key
   "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
@@ -44,6 +57,7 @@
 (load-theme 'solarized-dark t)
 
 ; enable/disable certain features
+(setq inhibit-startup-screen t)       ; disable start screen
 (scroll-bar-mode -1)                  ; disable scroll bar
 (if (fboundp 'horizontal-scroll-bar-mode)
   (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
@@ -74,7 +88,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
  ((string-match "darwin" system-configuration)
   (setq inferior-lisp-program "/usr/local/bin/sbcl"))
  ((string-match "linux" system-configuration)
-  (setq inferior-lisp-program "/usr/bin/sbcl")))
+  (setq inferior-lisp-program "/usr/bin/clisp")))
 (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-banner))
 (defun my-slime-mode-hook ()
@@ -86,7 +100,13 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-common-lisp-mode-hook ()
   "My cl-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    (lambda ()
+      (interactive)
+      (slime-repl-newline-and-indent))))
 
 ; configure scheme repl
 (setq scheme-program-name "guile")
@@ -209,6 +229,10 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (key-chord-define evil-normal-state-local-map "md" 'neotree-delete-node)
   (key-chord-define evil-normal-state-local-map "mm" 'neotree-rename-node))
 
+(defun my-after-real-init-hook ()
+  "My after-real-init-hook."
+  (emacs-welcome))
+
 (add-hook 'slime-mode-hook 'my-slime-mode-hook)
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
@@ -225,6 +249,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
+(add-hook 'after-real-init-hook 'my-after-real-init-hook)
 
 ; set up autocomplete modes
 (eval-after-load "auto-complete"
@@ -276,6 +301,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (cond
  ((string-match "darwin" system-configuration)
   (toggle-frame-fullscreen)))
+
+
+(run-hooks 'after-real-init-hook)
 
 (provide 'real-init)
 ;;; real-init ends here
