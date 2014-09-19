@@ -104,9 +104,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (define-key
     evil-insert-state-local-map
     [return]
-    (lambda ()
-      (interactive)
-      (slime-repl-newline-and-indent))))
+    'newline-and-indent))
 
 ; configure scheme repl
 (setq scheme-program-name "guile")
@@ -173,7 +171,11 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    'newline-and-indent))
 
 ; configure geiser
 (defun my-geiser-mode-hook ()
@@ -193,17 +195,29 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-emacs-lisp-mode-hook ()
   "My elisp-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    'newline-and-indent))
 
 (defun my-clojure-mode-hook ()
   "My clojure-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    'newline-and-indent))
 
 (defun my-clojurescript-mode-hook ()
   "My clojurescript-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-local-map
+    [return]
+    'newline-and-indent))
 
 ; configure org-present
 (defun my-org-present-mode-hook ()
