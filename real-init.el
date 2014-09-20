@@ -94,7 +94,18 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-slime-mode-hook ()
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
-  (rainbow-delimiters-mode))
+  (rainbow-delimiters-mode)
+  (define-key
+    evil-insert-state-map
+    [return]
+    'slime-repl-newline-and-indent)
+  (define-key
+    evil-normal-state-map
+    [return]
+    (lambda ()
+      (interactive)
+      (slime-repl-return)
+      (evil-insert 0 0))))
 
 ; configure common lisp mode
 (defun my-common-lisp-mode-hook ()
@@ -247,7 +258,6 @@ REPL-EVAL is the repl's function to evaluate an expression."
   "My after-real-init-hook."
   (emacs-welcome))
 
-(add-hook 'slime-mode-hook 'my-slime-mode-hook)
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
