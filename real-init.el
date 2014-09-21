@@ -70,6 +70,8 @@
 (setq ring-bell-function 'ignore)     ; stop bell
 (global-smart-tab-mode 1)             ; enable smart tabbing
 (global-flycheck-mode)
+(global-auto-revert-mode 1)           ; auto-refresh a changed file
+(setq auto-revert-verbose nil)
 
 (eval-after-load 'flycheck
   '(custom-set-variables
@@ -254,6 +256,12 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (key-chord-define evil-normal-state-local-map "md" 'neotree-delete-node)
   (key-chord-define evil-normal-state-local-map "mm" 'neotree-rename-node))
 
+(defun my-image-after-revert-hook ()
+  "My image-after-revert-hook to automatically refresh images."
+  (progn
+    (clear-image-cache)
+    (image-toggle-display-image)))
+
 (defun my-after-real-init-hook ()
   "My after-real-init-hook."
   (emacs-welcome))
@@ -273,6 +281,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
+(add-hook 'image-after-revert-hook 'my-image-after-revert-hook)
 (add-hook 'after-real-init-hook 'my-after-real-init-hook)
 
 ; set up autocomplete modes
