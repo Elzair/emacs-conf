@@ -17,7 +17,6 @@
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
 ; require dependencies
-(require 'cl-lib)
 (require 'ert)
 (require 'evil)
 (require 'evil-leader)
@@ -29,32 +28,6 @@
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
-
-(setq my/docs-directory (concat user-emacs-directory "docs/"))
-(unless (file-directory-p my/docs-directory)
-  (make-directory my/docs-directory))
-(defun my/download-url (url)
-  "This function will download the file at the given URL."
-  (cl-assert (stringp url))
-  (if (zerop (call-process "curl" nil nil nil "-O" url))
-      (message "Success Download %s" url)
-    (message "Failed Download %s" url)))
-
-(cl-defun my/system (&rest cmds)
-  "This function will execute the CMDS in an OS shell."
-  (dolist (cmd cmds)
-    (message "Execute '%s'" cmd)
-    (unless (zerop (call-process-shell-command cmd))
-      (error "%s is failed!!" cmd))))
-
-;; Hyperspec
-(let ((default-directory my/docs-directory))
-  (when (not (file-directory-p "HyperSpec"))
-    (message "Install HyperSpec(Wait a minute)")
-    (unless (file-exists-p "HyperSpec-7-0.tar.gz")
-      (my/download-url "ftp://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz"))
-    (my/system "tar xf HyperSpec-7-0.tar.gz"
-               "rm -f HyperSpec-7-0.tar.gz")))
 
 ; enable and configure vi emulation
 (global-evil-leader-mode)
@@ -109,14 +82,6 @@ REPL-NEWLINE-AND-INDENT is the repls's equivalent to 'newline-and-indent.
 REPL-EVAL is the repl's function to evaluate an expression."
   (interactive)
   (if (eolp) (funcall repl-eval) (funcall repl-newline-and-indent)))
-
-; HyperSpec
-(add-to-list 'load-path (concat (file-name-directory (locate-library "slime")) "lib"))
-(require 'hyperspec)
-(let ((hyperspec-dir (expand-file-name
-                      (concat user-emacs-directory "docs/HyperSpec/"))))
-  (setq common-lisp-hyperspec-root (concat "file://" hyperspec-dir)
-        common-lisp-hyperspec-symbol-table (concat hyperspec-dir "Data/Map_Sym.txt")))
 
 ; configure SLIME
 (cond
