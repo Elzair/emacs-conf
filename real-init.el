@@ -12,15 +12,15 @@
                             ".")
                     0 1)))
 
+
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
 ; require dependencies
+(require 'cl-lib)
 (require 'ert)
-;(require 'follow-mouse)
 (require 'evil)
 (require 'evil-leader)
-(require 'evil-map)
 (require 'flycheck)
 (require 'key-chord)
 (require 'frame-cmds)
@@ -30,6 +30,31 @@
 (require 'smart-tab)
 (require 'tern)
 
+(setq my/docs-directory (concat user-emacs-directory "docs/"))
+(unless (file-directory-p my/docs-directory)
+  (make-directory my/docs-directory))
+(defun my/download-url (url)
+  "This function will download the file at the given URL."
+  (cl-assert (stringp url))
+  (if (zerop (call-process "curl" nil nil nil "-O" url))
+      (message "Success Download %s" url)
+    (message "Failed Download %s" url)))
+
+(cl-defun my/system (&rest cmds)
+  "This function will execute the CMDS in an OS shell."
+  (dolist (cmd cmds)
+    (message "Execute '%s'" cmd)
+    (unless (zerop (call-process-shell-command cmd))
+      (error "%s is failed!!" cmd))))
+
+;; Hyperspec
+(let ((default-directory my/docs-directory))
+  (when (not (file-directory-p "HyperSpec"))
+    (message "Install HyperSpec(Wait a minute)")
+    (unless (file-exists-p "HyperSpec-7-0.tar.gz")
+      (my/download-url "ftp://ftp.lispworks.com/pub/software_tools/reference/HyperSpec-7-0.tar.gz"))
+    (my/system "tar xf HyperSpec-7-0.tar.gz"
+               "rm -f HyperSpec-7-0.tar.gz")))
 
 ; enable and configure vi emulation
 (global-evil-leader-mode)
@@ -85,15 +110,24 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (interactive)
   (if (eolp) (funcall repl-eval) (funcall repl-newline-and-indent)))
 
+; HyperSpec
+(add-to-list 'load-path (concat (file-name-directory (locate-library "slime")) "lib"))
+(require 'hyperspec)
+(let ((hyperspec-dir (expand-file-name
+                      (concat user-emacs-directory "docs/HyperSpec/"))))
+  (setq common-lisp-hyperspec-root (concat "file://" hyperspec-dir)
+        common-lisp-hyperspec-symbol-table (concat hyperspec-dir "Data/Map_Sym.txt")))
+
 ; configure SLIME
 (cond
  ((string-match "darwin" system-configuration)
   (setq inferior-lisp-program "/usr/local/bin/sbcl"))
  ((string-match "linux" system-configuration)
-  (setq inferior-lisp-program "/usr/bin/clisp")))
+  (setq inferior-lisp-program "/usr/bin/sbcl")))
 (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-banner))
-(defun my-slime-mode-hook ()
+(slime-setup '(slime-fancy slime-asdf slime-banner slime-autodoc))
+
+(defun my-slime-repl-mode-hook ()
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode)
@@ -110,10 +144,15 @@ REPL-EVAL is the repl's function to evaluate an expression."
       (evil-insert 0 0))))
 
 ; configure common lisp mode
-(defun my-common-lisp-mode-hook ()
-  "My cl-mode-hook."
+(defun my-slime-mode-hook ()
+  "My slime-mode-hook."
+  (auto-complete-mode t)
+  (set-up-slime-ac)
   (linum-mode)
-  (rainbow-delimiters-mode)
+  (rainbow-delimiters-mode))
+
+(defun my-lisp-mode-hook ()
+  "My 'lisp-mode-hook'."
   (define-key
     evil-insert-state-local-map
     [return]
@@ -268,10 +307,11 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
-(add-hook 'lisp-mode-hook 'my-common-lisp-mode-hook)
+(add-hook 'slime-mode-hook 'my-slime-mode-hook)
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
+(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
@@ -286,7 +326,10 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 ; set up autocomplete modes
 (eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes '(slime-repl-mode geiser-repl-mode)))
+  '(add-to-list 'ac-modes '(emacs-lisp-mode
+                            ecmascript-mode javascript-mode js-mode js2-mode
+                            slime-repl-mode slime-mode lisp-mode
+                            scheme-mode geiser-repl-mode)))
 
 (require 'smartparens-config)
 (smartparens-global-mode t)
@@ -296,8 +339,19 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (setq-default tab-width 2)
 
 ; enable autocompletion popup
-(require 'auto-complete-config)
-(ac-config-default)
+(when (require 'auto-complete-config nil 'noerror)
+  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
+  (setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
+  (ac-config-default)
+  (global-auto-complete-mode t)
+  (auto-complete-mode t)
+
+  ; dirty fix for having AC everywhere
+  (define-globalized-minor-mode real-global-auto-complete-mode
+    auto-complete-mode (lambda ()
+                         (if (not (minibufferp (current-buffer)))
+                             (auto-complete-mode 1))))
+  (real-global-auto-complete-mode t))
 
 ; set directory to save backup files
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
@@ -335,6 +389,10 @@ REPL-EVAL is the repl's function to evaluate an expression."
  ((string-match "darwin" system-configuration)
   (toggle-frame-fullscreen)))
 
+; Prevent annoying \"Active processes exist \" query on quit
+(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+  (flet ((process-list ())) ad-do-it))
 
 (run-hooks 'after-real-init-hook)
 
