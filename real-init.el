@@ -359,6 +359,11 @@ REPL-EVAL is the repl's function to evaluate an expression."
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
+
+(cond ((string-match "darwin" system-configuration)
+       ((require 'follow-mouse "~/.emacs.d/scripts/follow-mouse.el")
+        (turn-on-follow-mouse))))
+
 (run-hooks 'after-real-init-hook)
 
 (provide 'real-init)

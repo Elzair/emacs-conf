@@ -5,3 +5,4 @@ eshell/
 image-dired/
 savehist
 session*
+scripts/follow-mouse.el
