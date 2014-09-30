@@ -368,6 +368,11 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (key-chord-define evil-insert-state-map "jj" (lambda ()
                                                (interactive)
                                                (evil-forward-char 1)))
+
+(cond ((string-match "darwin" system-configuration)
+       ((require 'follow-mouse "~/.emacs.d/scripts/follow-mouse.el")
+        (turn-on-follow-mouse))))
+
 (run-hooks 'after-real-init-hook)
 
 (provide 'real-init)
