@@ -1,10 +1,13 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: ifelif
+# name: ifeiel
 # --
 if ($1) {
- $2
+  $2
 }
 else if ($3) {
- $0
+  $4
+}
+else {
+  $0
 }
