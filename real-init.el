@@ -28,6 +28,7 @@
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
+(require 'yasnippet)
 
 ; enable and configure vi emulation
 (global-evil-leader-mode)
@@ -70,6 +71,7 @@
 (global-flycheck-mode)
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+(yas-global-mode)                     ; enable snippets
 
 (eval-after-load 'flycheck
   '(custom-set-variables
@@ -205,9 +207,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
 (defun my-js2-mode-hook ()
   "My javascript-mode-hook."
   (linum-mode)
-  (tern-mode t)
-  (declare-abbrevs (evil-insert-js-mode-abbrev-table)
-                   (("iff" "if () {\n}" "<escape> k $ 2 h i"))))
+  (tern-mode t))
 
 (defun my-emacs-lisp-mode-hook ()
   "My elisp-mode-hook."
@@ -302,6 +302,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
 ; set indentation options
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+(defvaralias 'js-indent-level 'tab-width)
 
 ; enable autocompletion popup
 (when (require 'auto-complete-config nil 'noerror)
@@ -310,6 +313,7 @@ REPL-EVAL is the repl's function to evaluate an expression."
   (ac-config-default)
   (global-auto-complete-mode t)
   (auto-complete-mode t)
+
 
   ; dirty fix for having AC everywhere
   (define-globalized-minor-mode real-global-auto-complete-mode
