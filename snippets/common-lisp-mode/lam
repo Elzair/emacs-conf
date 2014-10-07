@@ -1,6 +1,5 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: dsr
+# name: lam
 # --
-(define-syntax-rule ($1) 
-($2))$0
+(lambda ($1) $2)$0

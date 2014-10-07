@@ -2,5 +2,5 @@
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: df
 # --
-define ($1)
-($2)$0
+(define ($1)
+($2))$0

@@ -2,4 +2,4 @@
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: dv
 # --
-define $1 $0
+(define $1)$0

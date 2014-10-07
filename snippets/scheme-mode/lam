@@ -2,4 +2,4 @@
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: lam
 # --
-lambda ($1) ($2)$0
+(lambda ($1) ($2))$0
