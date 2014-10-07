@@ -16,6 +16,8 @@
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
+(package-initialize)
+
 ; require dependencies
 (require 'ert)
 (require 'evil)
@@ -365,8 +367,9 @@ REPL-EVAL is the repl's function to evaluate an expression."
 
 
 (cond ((string-match "darwin" system-configuration)
-       ((require 'follow-mouse "~/.emacs.d/scripts/follow-mouse.el")
-        (turn-on-follow-mouse))))
+       (progn
+         (require 'follow-mouse)
+         (turn-on-follow-mouse))))
 
 (run-hooks 'after-real-init-hook)
 
