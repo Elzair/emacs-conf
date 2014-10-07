@@ -4,18 +4,16 @@
 ;;; Code:
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
-                         ))
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 
 ; list of installed packages
-(setq package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree org org-present popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree yasnippet))
+(defvar package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local neotree org org-present popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree yasnippet))
 
 ; initialize packages
 (package-initialize)
 
 ; fetch list of available packages
-(unless package-archive-contents 
-  (package-refresh-contents))
+(package-refresh-contents)
 
 ; install missing packages
 (dolist (package package-list)

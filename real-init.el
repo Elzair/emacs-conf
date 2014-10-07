@@ -38,10 +38,6 @@
 (setq key-chord-two-keys-delay 0.5)
 
 ; vim-style keybindings
-(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "jj" (lambda ()
-                                               (interactive)
-                                               (evil-forward-char 1)))
 (evil-leader/set-leader "-")
 (evil-leader/set-key
   "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
@@ -74,6 +70,11 @@
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
 (yas-global-mode)                     ; enable snippets
+
+; YASnippet keybindings
+(define-key yas-minor-mode-map (kbd "<tab>") nil)
+(define-key yas-minor-mode-map (kbd "TAB") nil)
+(define-key yas-minor-mode-map (kbd "SPC") 'yas-expand)
 
 (eval-after-load 'flycheck
   '(custom-set-variables
@@ -365,6 +366,10 @@ REPL-EVAL is the repl's function to evaluate an expression."
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
+(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jj" (lambda ()
+                                               (interactive)
+                                               (evil-forward-char 1)))
 
 (cond ((string-match "darwin" system-configuration)
        (progn
