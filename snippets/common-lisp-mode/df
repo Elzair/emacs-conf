@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: dsr
+# name: df
 # --
-(define-syntax-rule ($1) 
-($2))$0
+(defun $1 ($2)
+($3))$0
