@@ -51,7 +51,7 @@
   :keymap (make-sparse-keymap))
 
 ; set default font and theme
-(set-default-font "InconsolataLGC-12")
+(set-default-font "Inconsolata LGC")
 (load-theme 'solarized-dark t)
 
 ; enable/disable certain features
