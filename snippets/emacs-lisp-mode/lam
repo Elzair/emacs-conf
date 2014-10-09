@@ -1,7 +1,5 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: nfun
+# name: lam
 # --
-function $1($2) {
-  $3
-}$0
+(lambda ($1) ($2))$0

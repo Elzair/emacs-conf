@@ -28,6 +28,7 @@
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
 (require 'neotree)
+(require 'presentation)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
@@ -81,8 +82,6 @@
 (eval-after-load 'flycheck
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
-
-
 
 ; configure SLIME
 (cond
@@ -327,30 +326,8 @@
 
 (neotree)
 
-(defvar saved-mode-line-format nil)
-(defvar saved-window-linum-mode 1)
-(defvar show-menu-bar 1)
-(defun presentation ()
-  "This function will toggle presentation mode."
-  (interactive)
-  (progn
-    (toggle-frame-fullscreen)
-    (if (eq saved-mode-line-format nil)
-        (progn
-          (neotree-hide)
-          (setq saved-mode-line-format (list mode-line-format))
-          (setq mode-line-format nil))
-        (setq mode-line-format saved-mode-line-format)
-        (setq saved-mode-line-format nil)
-        (neotree-show)
-        (other-window 1))
-    (setq saved-window-linum-mode (- saved-window-linum-mode))
-    (linum-mode saved-window-linum-mode)
-    (setq show-menu-bar (- show-menu-bar))
-    (menu-bar-mode show-menu-bar)))
-
 ; map F11 to fullscreen
-(global-set-key [f11] 'presentation)
+(global-set-key [f11] 'toggle-presentation)
 
 ; enable fullscreen by default on OSX
 (cond

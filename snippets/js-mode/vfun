@@ -3,5 +3,5 @@
 # name: vfun
 # --
 var $1 = function($2) {
-  $0
-};
+  $3
+};$0

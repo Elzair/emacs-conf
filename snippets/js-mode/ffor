@@ -1,7 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: nfun
+# name: ffor
 # --
-function $1($2) {
-  $3
+for ($1) {
+ $2
 }$0
