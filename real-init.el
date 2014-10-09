@@ -22,6 +22,7 @@
 (require 'ert)
 (require 'evil)
 (require 'evil-leader)
+(require 'evil-repl)
 (require 'flycheck)
 (require 'key-chord)
 (require 'frame-cmds)
@@ -69,6 +70,7 @@
 (global-flycheck-mode)
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+(setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (yas-global-mode)                     ; enable snippets
 
 ; YASnippet keybindings
@@ -80,13 +82,7 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
-; create function for "smart" indenting on lisp repls
-(defun eval-or-newline-and-indent (repl-newline-and-indent repl-eval)
-  "This function should evaluate an s-expression or create a newline.
-REPL-NEWLINE-AND-INDENT is the repls's equivalent to 'newline-and-indent.
-REPL-EVAL is the repl's function to evaluate an expression."
-  (interactive)
-  (if (eolp) (funcall repl-eval) (funcall repl-newline-and-indent)))
+
 
 ; configure SLIME
 (cond

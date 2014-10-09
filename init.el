@@ -7,18 +7,23 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 ; list of installed packages
-(defvar package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local magit markdown-mode neotree org org-present popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree yasnippet))
+(defvar package-list '(ac-geiser ac-slime auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg load-theme-buffer-local magit markdown-mode neotree org org-present popup quack rainbow-delimiters slime slime-scratch smart-tab smartparens solarized-theme tern undo-tree yasnippet)
+  "List of required packages.")
 
 ; initialize packages
 (package-initialize)
 
-; fetch list of available packages
-(package-refresh-contents)
-
 ; install missing packages
+(defvar package-contents-refreshed nil
+  "Whether or not `package-refresh-contents` has been called.")
 (dolist (package package-list)
   (unless (package-installed-p package)
-    (package-install package)))
+    (progn
+      (if (not package-contents-refreshed)
+          (progn
+            (package-refresh-contents)
+            (setq package-contents-refreshed t)))
+      (package-install package))))
 
 ; evaluate real init file
 (add-hook 'after-init-hook (lambda () (load "~/.emacs.d/real-init.el")))
