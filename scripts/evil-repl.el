@@ -18,10 +18,10 @@
 REPL-NEWLINE-AND-INDENT is the repls's equivalent to 'newline-and-indent.
 REPL-EVAL is the repl's function to evaluate an expression."
   `(progn
-    (define-key evil-insert-state-map
+    (define-key evil-insert-state-local-map
       [return]
       ',repl-newline-and-indent)
-    (define-key evil-normal-state-map
+    (define-key evil-normal-state-local-map
       [return]
       (evil-repl-eval ,repl-eval))))
 

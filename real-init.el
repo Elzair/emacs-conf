@@ -96,17 +96,7 @@
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode)
-  (define-key
-    evil-insert-state-map
-    [return]
-    'slime-repl-newline-and-indent)
-  (define-key
-    evil-normal-state-map
-    [return]
-    (lambda ()
-      (interactive)
-      (slime-repl-return)
-      (evil-insert 0 0))))
+  (evil-repl-smart newline-and-indent ielm-return))
 
 ; configure common lisp mode
 (defun my-slime-mode-hook ()
@@ -114,21 +104,6 @@
   (auto-complete-mode t)
   (set-up-slime-ac)
   (linum-mode)
-  (rainbow-delimiters-mode))
-
-(defun my-lisp-mode-hook ()
-  "My 'lisp-mode-hook'."
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    'newline-and-indent))
-
-; configure scheme repl
-(setq scheme-program-name "guile")
-(defun my-inferior-scheme-mode-hook ()
-  "My ism-repl-mode-hook."
-  (require 'quack)
-  (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode))
 
 ; configure geiser
@@ -140,22 +115,8 @@
   (rainbow-delimiters-mode)
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
-  (define-key
-    evil-insert-state-local-map
-    "\C-m"
-    (lambda ()
-      (interactive)
-      (eval-or-newline-and-indent
-       'geiser-repl--newline-and-indent
-       'geiser-repl--maybe-send)))
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    (lambda ()
-      (interactive)
-      (eval-or-newline-and-indent
-       'geiser-repl--newline-and-indent
-       'geiser-repl--maybe-send))))
+  (evil-repl-smart geiser-repl--newline-and-indent
+                   geiser-repl--maybe-send))
 
 (defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
@@ -167,33 +128,13 @@
                      ac-source-words-in-same-mode-buffers))
   (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
   (auto-complete-mode 1)
-  ;(define-key
-  ;  evil-insert-state-local-map
-  ;  "\C-m"
-  ;  (lambda ()
-  ;    (interactive)
-  ;    (eval-or-newline-and-indent
-  ;     'newline-and-indent
-  ;     'ielm-return)))
-  ;(define-key
-  ;  evil-insert-state-local-map
-  ;  [return]
-  ;  (lambda ()
-  ;    (interactive)
-  ;    (eval-or-newline-and-indent
-  ;     'newline-and-indent
-  ;     'ielm-return))))
   (evil-repl-smart newline-and-indent ielm-return))
 
 ; configure scheme files
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
   (linum-mode)
-  (rainbow-delimiters-mode)
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    'newline-and-indent))
+  (rainbow-delimiters-mode))
 
 ; configure geiser
 (defun my-geiser-mode-hook ()
@@ -275,7 +216,6 @@
 (add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
-(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'js2-mode-hook 'my-js2-mode-hook)
