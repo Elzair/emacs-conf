@@ -19,6 +19,7 @@
 (package-initialize)
 
 ; require dependencies
+(require 'common-hooks)
 (require 'ert)
 (require 'evil)
 (require 'evil-leader)
@@ -96,15 +97,8 @@
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode)
-  (evil-repl-smart newline-and-indent ielm-return))
-
-; configure common lisp mode
-(defun my-slime-mode-hook ()
-  "My slime-mode-hook."
-  (auto-complete-mode t)
-  (set-up-slime-ac)
-  (linum-mode)
-  (rainbow-delimiters-mode))
+  (evil-repl-smart slime-repl-newline-and-indent
+                   slime-repl-return))
 
 ; configure geiser
 (defun my-geiser-repl-mode-hook ()
@@ -130,55 +124,46 @@
   (auto-complete-mode 1)
   (evil-repl-smart newline-and-indent ielm-return))
 
+; configure common lisp mode
+(defun my-slime-mode-hook ()
+  "My slime-mode-hook."
+  (auto-complete-mode t)
+  (set-up-slime-ac)
+  (common-lispy-hooks))
+
 ; configure scheme files
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
-  (linum-mode)
-  (rainbow-delimiters-mode))
+  (common-lispy-hooks))
 
 ; configure geiser
 (defun my-geiser-mode-hook ()
   "My geiser-mode-hook."
-  (linum-mode)
-  (rainbow-delimiters-mode)
-  (ac-geiser-setup))
+  (ac-geiser-setup)
+  (common-lispy-hooks))
 
 ; configure javascript files
-(defun my-js2-mode-hook ()
+(defun my-javascript-mode-hook ()
   "My javascript-mode-hook."
   (linum-mode)
-  (tern-mode t))
+  (tern-mode t)
+  (evil-smart-indent))
 
 (defun my-emacs-lisp-mode-hook ()
   "My elisp-mode-hook."
-  (linum-mode)
-  (rainbow-delimiters-mode)
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    'newline-and-indent))
+  (common-lispy-hooks))
 
 (defun my-clojure-mode-hook ()
   "My clojure-mode-hook."
-  (linum-mode)
-  (rainbow-delimiters-mode)
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    'newline-and-indent))
+  (common-lispy-hooks))
 
 (defun my-clojurescript-mode-hook ()
   "My clojurescript-mode-hook."
-  (linum-mode)
-  (rainbow-delimiters-mode)
-  (define-key
-    evil-insert-state-local-map
-    [return]
-    'newline-and-indent))
+  (common-lispy-hooks))
 
 ; configure org-present
 (defun my-org-present-mode-hook ()
-  "My org-pesent-mode hook."
+  "My org-present-mode hook."
   (org-present-big)
   (org-display-inline-images))
 
@@ -212,13 +197,12 @@
 
 (add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
-(add-hook 'slime-mode-hook 'my-slime-mode-hook)
-(add-hook 'inferior-scheme-mode-hook 'my-inferior-scheme-mode-hook)
-(add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
-(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'slime-mode-hook 'my-slime-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
-(add-hook 'js2-mode-hook 'my-js2-mode-hook)
+(add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'js-mode-hook 'my-javascript-mode-hook)
+(add-hook 'js2-mode-hook 'my-javascript-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
@@ -285,6 +269,7 @@
                                                (interactive)
                                                (evil-forward-char 1)))
 
+; hack to enable focus-follow-mouse on OSX
 (cond ((string-match "darwin" system-configuration)
        (progn
          (require 'follow-mouse)
