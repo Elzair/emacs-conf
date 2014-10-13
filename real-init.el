@@ -125,7 +125,7 @@
   (evil-repl-smart newline-and-indent ielm-return))
 
 ; configure common lisp mode
-(defun my-slime-mode-hook ()
+(defun my-lisp-mode-hook ()
   "My slime-mode-hook."
   (auto-complete-mode t)
   (set-up-slime-ac)
@@ -195,10 +195,10 @@
   "My after-real-init-hook."
   (emacs-welcome))
 
-(add-hook 'slime-repl-mode-hook 'my-slime-mode-hook)
+(add-hook 'slime-repl-mode-hook 'my-slime-repl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
-(add-hook 'slime-mode-hook 'my-slime-mode-hook)
+(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
 (add-hook 'js-mode-hook 'my-javascript-mode-hook)
