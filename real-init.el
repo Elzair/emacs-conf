@@ -101,6 +101,7 @@
                    slime-repl-return))
 
 ; configure geiser
+(setq geiser--im)
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
