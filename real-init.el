@@ -24,6 +24,7 @@
 (require 'evil)
 (require 'evil-leader)
 (require 'evil-repl)
+(require 'evil-indent)
 (require 'flycheck)
 (require 'key-chord)
 (require 'frame-cmds)
@@ -97,11 +98,11 @@
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode)
-  (evil-repl-smart slime-repl-newline-and-indent
-                   slime-repl-return))
+  ;(evil-repl-smart slime-repl-newline-and-indent
+  ;                 slime-repl-return)
+  )
 
 ; configure geiser
-(setq geiser--im)
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
@@ -111,7 +112,8 @@
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
   (evil-repl-smart geiser-repl--newline-and-indent
-                   geiser-repl--maybe-send))
+                   geiser-repl--maybe-send)
+  (ac-geiser-setup))
 
 (defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
