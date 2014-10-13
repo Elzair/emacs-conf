@@ -98,8 +98,8 @@
   "My slime-mode-hook."
   (set-up-slime-ac)                   ; set-up SLIME autocomplete
   (rainbow-delimiters-mode)
-  (evil-repl-smart slime-repl-newline-and-indent
-                   slime-repl-return)
+  ;(evil-repl-smart slime-repl-newline-and-indent
+  ;                 slime-repl-return)
   )
 
 ; configure geiser
@@ -198,8 +198,7 @@
   "My after-real-init-hook."
   (emacs-welcome))
 
-;(add-hook 'slime-repl-mode-hook 'my-slime-repl-mode-hook)
-(add-hook 'slime-repl-connected-hook-function 'my-slime-repl-mode-hook)
+(add-hook 'slime-repl-mode-hook 'my-slime-repl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
 (add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
