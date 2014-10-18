@@ -33,6 +33,7 @@
 (require 'presentation)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
+(require 'slime-config)
 (require 'tern)
 (require 'yasnippet)
 
@@ -85,14 +86,7 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
-; configure SLIME
-(cond
- ((string-match "darwin" system-configuration)
-  (setq inferior-lisp-program "/usr/local/bin/sbcl"))
- ((string-match "linux" system-configuration)
-  (setq inferior-lisp-program "/usr/bin/sbcl")))
-(require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-banner slime-autodoc))
+(load-slime) ; configure SLIME
 
 (defun my-slime-repl-mode-hook ()
   "My slime-mode-hook."
