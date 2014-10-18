@@ -5,11 +5,7 @@
 ;;; Code:
 
 (require 'slime)
-(require 'slime-asdf)
-(require 'slime-autodoc)
 (require 'slime-autoloads)
-(require 'slime-banner)
-(require 'slime-fancy)
 
 (defun load-slime ()
   "This function configures SLIME."
