@@ -15,6 +15,8 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
+(add-to-list 'load-path "~/.emacs.d/elpa/ac-sly-20141023.1547") ; HACK for testing ac-sly
+(require 'ac-sly)                                               ; ditto
 
 (package-initialize)
 
@@ -33,7 +35,6 @@
 (require 'presentation)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
-(require 'slime-config)
 (require 'tern)
 (require 'yasnippet)
 
@@ -86,15 +87,18 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
-(load-slime) ; configure SLIME
-
-(defun my-slime-repl-mode-hook ()
-  "My slime-mode-hook."
-  (set-up-slime-ac)                   ; set-up SLIME autocomplete
+; configure sly
+(setq sly-contribs '(sly-asdf sly-autodoc sly-banner sly-fancy))
+(cond ((string-match "darwin" system-configuration)
+       (setq inferior-lisp-program "/usr/local/bin/sbcl"))
+      ((string-match "linux" system-configuration)
+       (setq inferior-lisp-program "/usr/bin/sbcl")))
+(defun my-sly-mrepl-mode-hook ()
+  "My sly-mrepl-hook."
+  (set-up-sly-ac)
   (rainbow-delimiters-mode)
-  ;(evil-repl-smart slime-repl-newline-and-indent
-  ;                 slime-repl-return)
-  )
+  (evil-repl-smart newline-and-indent
+                   sly-mrepl-return))
 
 ; configure geiser
 (defun my-geiser-repl-mode-hook ()
@@ -125,7 +129,7 @@
 (defun my-lisp-mode-hook ()
   "My slime-mode-hook."
   (auto-complete-mode t)
-  (set-up-slime-ac)
+  (set-up-sly-ac)
   (common-lispy-hooks))
 
 ; configure scheme files
@@ -192,7 +196,7 @@
   "My after-real-init-hook."
   (emacs-welcome))
 
-(add-hook 'slime-repl-mode-hook 'my-slime-repl-mode-hook)
+(add-hook 'sly-mrepl-mode-hook 'my-sly-mrepl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
 (add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
@@ -213,7 +217,7 @@
 (eval-after-load "auto-complete"
   '(add-to-list 'ac-modes '(emacs-lisp-mode
                             ecmascript-mode javascript-mode js-mode js2-mode
-                            slime-repl-mode slime-mode lisp-mode
+                            sly-mrepl-mode sly-mode lisp-mode
                             scheme-mode geiser-repl-mode)))
 
 (require 'smartparens-config)
