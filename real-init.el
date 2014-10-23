@@ -86,7 +86,7 @@
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
 ; configure sly
-(setq sly-contribs '(sly-asdf sly-autodoc sly-banner sly-fancy))
+(setq sly-contribs '(sly-autodoc sly-fancy))
 (cond ((string-match "darwin" system-configuration)
        (setq inferior-lisp-program "/usr/local/bin/sbcl"))
       ((string-match "linux" system-configuration)
