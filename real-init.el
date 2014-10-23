@@ -15,8 +15,6 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
-(add-to-list 'load-path "~/.emacs.d/elpa/ac-sly-20141023.1547") ; HACK for testing ac-sly
-(require 'ac-sly)                                               ; ditto
 
 (package-initialize)
 
