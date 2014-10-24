@@ -94,6 +94,7 @@
 (defun my-sly-mrepl-mode-hook ()
   "My sly-mrepl-hook."
   (set-up-sly-ac)
+  (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
   (rainbow-delimiters-mode)
   (evil-repl-smart newline-and-indent
                    sly-mrepl-return))
