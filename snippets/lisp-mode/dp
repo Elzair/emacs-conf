@@ -1,7 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: dp
-# key: dp
-# binding: direct-keybinding
-# --
-defparameter $1 $2 "$0"

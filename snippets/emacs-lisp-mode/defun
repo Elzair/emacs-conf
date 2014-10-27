@@ -1,7 +1,9 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: lam
-# key: lam
+# name: defun
+# key: defun
 # binding: direct-keybinding
 # --
-lambda ($1) ($0)
+defun $1 ($2)
+"$3"
+($0)

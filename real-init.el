@@ -14,6 +14,7 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
+(add-to-list 'load-path "~/Development/emacs/yasnippet")
 
 (package-initialize)
 

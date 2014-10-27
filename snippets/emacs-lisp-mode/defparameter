@@ -1,0 +1,5 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: defparameter
+# binding: defparameter
+# --
+defparameter $1 $2 "$0"

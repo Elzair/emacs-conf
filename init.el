@@ -7,7 +7,7 @@
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
 ; list of installed packages
-(defvar package-list '(ac-geiser ac-sly auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present popup quack rainbow-delimiters sly smart-tab smartparens solarized-theme tern undo-tree yasnippet)
+(defvar package-list '(ac-geiser ac-sly auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash evil evil-leader flycheck flycheck-pos-tip geiser goto-chg julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present popup quack rainbow-delimiters sly smart-tab smartparens solarized-theme tern undo-tree)
   "List of required packages.")
 
 ; initialize packages

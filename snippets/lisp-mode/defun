@@ -1,7 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
-# name: df
-# key: df
+# name: defun
+# key: defun
 # binding: direct-keybinding
 # --
 defun $1 ($2)
