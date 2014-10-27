@@ -49,6 +49,10 @@
   "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
 (key-chord-mode 1)
 (evil-ex-define-cmd "er" 'eval-region)
+(evil-ex-define-cmd "ev" 'eval-expression)
+(evil-ex-define-cmd "hk" 'describe-key)
+(evil-ex-define-cmd "hf" 'describe-function)
+(evil-ex-define-cmd "hv" 'describe-variable)
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
   :keymap (make-sparse-keymap))
