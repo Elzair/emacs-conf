@@ -1,5 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: dv
+# key: dv
+# binding: direct-keybinding
 # --
-(define $1)$0
+define $1 $2 "$0"

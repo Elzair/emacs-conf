@@ -12,7 +12,6 @@
                             ".")
                     0 1)))
 
-
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
@@ -219,8 +218,8 @@
                             sly-mrepl-mode sly-mode lisp-mode
                             scheme-mode geiser-repl-mode)))
 
-(require 'smartparens-config)
-(smartparens-global-mode t)
+;(require 'smartparens-config)
+;(smartparens-global-mode t)
 
 ; set indentation options
 (setq-default indent-tabs-mode nil)

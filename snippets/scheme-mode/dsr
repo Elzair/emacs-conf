@@ -1,6 +1,9 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: dsr
+# key: dsr
+# binding: direct-keybinding
 # --
-(define-syntax-rule ($1) 
-($2))$0
+define-syntax-rule ($1) 
+"$2"
+($0)

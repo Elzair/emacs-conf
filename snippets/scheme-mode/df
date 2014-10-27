@@ -1,6 +1,9 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: df
+# key: df
+# binding: direct-keybinding
 # --
-(define ($1)
-($2))$0
+define ($1)
+"$2"
+($0)

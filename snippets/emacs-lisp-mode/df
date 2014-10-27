@@ -1,7 +1,9 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: df
+# key: df
+# binding: direct-keybinding
 # --
-(defun $1 ($2)
-($3)
-"$4")$0
+defun $1 ($2)
+"$3"
+($0)
