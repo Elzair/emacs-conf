@@ -14,7 +14,6 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
-(add-to-list 'load-path "~/Development/emacs/punctuality-logger")
 
 (package-initialize)
 
@@ -31,7 +30,6 @@
 (require 'load-theme-buffer-local)
 (require 'neotree)
 (require 'presentation)
-(require 'punctuality-logger)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
