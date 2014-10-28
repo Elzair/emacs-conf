@@ -1,6 +1,7 @@
 # -*- mode: snippet; require-final-newline: nil -*-
 # contributor: Philip Woods <elzairthesorcerer@gmail.com>
 # name: define
-# binding: define
+# key: define
+# binding: direct-keybinding
 # --
 define $1 $2 "$0"
