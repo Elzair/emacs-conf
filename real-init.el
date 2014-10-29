@@ -52,6 +52,9 @@
 (evil-ex-define-cmd "hk" 'describe-key)
 (evil-ex-define-cmd "hf" 'describe-function)
 (evil-ex-define-cmd "hv" 'describe-variable)
+(evil-ex-define-cmd "ms" 'magit-status)
+(evil-ex-define-cmd "mc" 'magit-commit)
+(evil-ex-define-cmd "lb" 'list-buffers)
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
   :keymap (make-sparse-keymap))

@@ -9,3 +9,4 @@ scripts/follow-mouse.el
 image-dired/
 url/
 sessions/
+orientation.el
