@@ -1,4 +1,4 @@
-;;; package --- Elzair's real Emacs init file
+;;; real-init.el --- Elzair's real Emacs init file
 ;;; Commentary:
 ;;; This is my real personal start-up file for Emacs.
 ;;; Code:
@@ -29,7 +29,9 @@
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
 (require 'neotree)
+(require 'orientation)
 (require 'presentation)
+(require 'punctuality-logger)
 (require 'rainbow-delimiters)
 (require 'smart-tab)
 (require 'tern)
@@ -43,10 +45,26 @@
 ; vim-style keybindings
 (evil-leader/set-leader "-")
 (evil-leader/set-key
-  "e v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/real-init.el"))
-  "p v" (lambda () (interactive) (evil-window-vnew 80 "~/.emacs.d/init.el"))
-  "s v" (lambda () (interactive) (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
+  "e v" (lambda ()
+          (interactive)
+          (if (and (boundp 'emacs-screen-orientation)
+                   (equal emacs-screen-orientation "vertical"))
+              (evil-window-new 40 "~/.emacs.d/real-init.el")
+            (evil-window-vnew 80 "~/.emacs.d/real-init.el")))
+  "p v" (lambda ()
+          (interactive)
+          (if (and (boundp 'emacs-screen-orientation)
+                   (equal emacs-screen-orientation "vertical"))
+              (evil-window-new 40 "~/.emacs.d/init.el")
+            (evil-window-vnew 80 "~/.emacs.d/init.el")))
+  "s v" (lambda ()
+          (interactive)
+          (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
 (key-chord-mode 1)
+(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
+(key-chord-define evil-insert-state-map "jj" (lambda ()
+                                               (interactive)
+                                               (right-char 1)))
 (evil-ex-define-cmd "er" 'eval-region)
 (evil-ex-define-cmd "ev" 'eval-expression)
 (evil-ex-define-cmd "hk" 'describe-key)
@@ -76,13 +94,13 @@
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
 (setq ring-bell-function 'ignore)     ; stop bell
 (global-smart-tab-mode 1)             ; enable smart tabbing
-(global-flycheck-mode)
+(global-flycheck-mode)                ; enable syntax checking
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+
+; enable & configure yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (yas-global-mode)                     ; enable snippets
-
-; YASnippet keybindings
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
 (define-key yas-minor-mode-map (kbd "TAB") nil)
 (define-key yas-minor-mode-map (kbd "SPC") 'yas-expand)
@@ -105,7 +123,6 @@
   (evil-repl-smart newline-and-indent
                    sly-mrepl-return))
 
-; configure geiser
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
@@ -126,29 +143,24 @@
                      ac-source-features
                      ac-source-symbols
                      ac-source-words-in-same-mode-buffers))
-  (add-to-list 'ac-modes 'inferior-emacs-lisp-mode)
   (auto-complete-mode 1)
   (evil-repl-smart newline-and-indent ielm-return))
 
-; configure common lisp mode
 (defun my-lisp-mode-hook ()
-  "My slime-mode-hook."
+  "My lisp-mode-hook."
   (auto-complete-mode t)
   (set-up-sly-ac)
   (common-lispy-hooks))
 
-; configure scheme files
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
   (common-lispy-hooks))
 
-; configure geiser
 (defun my-geiser-mode-hook ()
   "My geiser-mode-hook."
   (ac-geiser-setup)
   (common-lispy-hooks))
 
-; configure javascript files
 (defun my-javascript-mode-hook ()
   "My javascript-mode-hook."
   (linum-mode)
@@ -167,7 +179,6 @@
   "My clojurescript-mode-hook."
   (common-lispy-hooks))
 
-; configure org-present
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
   (org-present-big)
@@ -197,10 +208,6 @@
     (clear-image-cache)
     (image-toggle-display-image)))
 
-(defun my-after-real-init-hook ()
-  "My after-real-init-hook."
-  (emacs-welcome))
-
 (add-hook 'sly-mrepl-mode-hook 'my-sly-mrepl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
@@ -216,17 +223,6 @@
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
 (add-hook 'image-after-revert-hook 'my-image-after-revert-hook)
-(add-hook 'after-real-init-hook 'my-after-real-init-hook)
-
-; set up autocomplete modes
-(eval-after-load "auto-complete"
-  '(add-to-list 'ac-modes '(emacs-lisp-mode
-                            ecmascript-mode javascript-mode js-mode js2-mode
-                            sly-mrepl-mode sly-mode lisp-mode
-                            scheme-mode geiser-repl-mode)))
-
-;(require 'smartparens-config)
-;(smartparens-global-mode t)
 
 ; set indentation options
 (setq-default indent-tabs-mode nil)
@@ -237,12 +233,15 @@
 
 ; enable autocompletion popup
 (when (require 'auto-complete-config nil 'noerror)
+  (add-to-list 'ac-modes '(emacs-lisp-mode inferior-emacs-lisp-mode
+                           ecmascript-mode javascript-mode js-mode js2-mode
+                           sly-mrepl-mode sly-mode lisp-mode
+                           scheme-mode geiser-repl-mode))
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
   (setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
   (ac-config-default)
   (global-auto-complete-mode t)
   (auto-complete-mode t)
-
 
   ; dirty fix for having AC everywhere
   (define-globalized-minor-mode real-global-auto-complete-mode
@@ -270,18 +269,11 @@
   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
   (flet ((process-list ())) ad-do-it))
 
-(key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
-(key-chord-define evil-insert-state-map "jj" (lambda ()
-                                               (interactive)
-                                               (evil-forward-char 1)))
-
 ; hack to enable focus-follow-mouse on OSX
 (cond ((string-match "darwin" system-configuration)
        (progn
          (require 'follow-mouse)
          (turn-on-follow-mouse))))
 
-(run-hooks 'after-real-init-hook)
-
 (provide 'real-init)
-;;; real-init ends here
+;;; real-init.el ends here
