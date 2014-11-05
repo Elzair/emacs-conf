@@ -4,4 +4,4 @@
 # key: define
 # binding: direct-keybinding
 # --
-define $1 $2 "$0"
+define $1 $0

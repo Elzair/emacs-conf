@@ -2,18 +2,18 @@
 ;; Automatically generated file!!! DO NOT EDIT!!!
 
 (setq url-cookie-storage
- '((".google.com"
-  [url-cookie "PREF" "ID=02cfe89850c467f0:FF=0:TM=1411303422:LM=1411303422:S=nRC4w99QLhK5DenF" "20-Sep-2016 12:43:42.00 GMT" "/" ".google.com" nil]
+ '((".ycombinator.com"
+  [url-cookie "HttpOnly" nil "23-Dec-2019 23:50:00.00 GMT" "/" ".ycombinator.com" nil]
+  [url-cookie "__cfduid" "def3cb849f562661110b9b3b88eb434581411303053388" "23-Dec-2019 23:50:00.00 GMT" "/" ".ycombinator.com" nil])
+ (".google.com"
+  [url-cookie "HttpOnly" nil "23-Mar-2015 12:43:42.00 GMT" "/" ".google.com" nil]
   [url-cookie "NID" "67=VvLxviSD9ytNuPN83GAfNqUBv2TOI72AiNm_0fhiLrThRUCSpMc806SoqAKcaQ_U2Vkhmm418CT36cKIBACeS4bSIzmMmZUu3KxwY9Qk2R1az7EMu-_gKnkHxf6yhA_Y" "23-Mar-2015 12:43:42.00 GMT" "/" ".google.com" nil]
-  [url-cookie "HttpOnly" nil "23-Mar-2015 12:43:42.00 GMT" "/" ".google.com" nil])
- (".ycombinator.com"
-  [url-cookie "__cfduid" "def3cb849f562661110b9b3b88eb434581411303053388" "23-Dec-2019 23:50:00.00 GMT" "/" ".ycombinator.com" nil]
-  [url-cookie "HttpOnly" nil "23-Dec-2019 23:50:00.00 GMT" "/" ".ycombinator.com" nil]))
+  [url-cookie "PREF" "ID=02cfe89850c467f0:U=a6a92d111571a4b5:FF=0:TM=1411303422:LM=1415044780:S=zNJX2zFAEhoLhSzM" "02-Nov-2016 19:59:40.00 GMT" "/" ".google.com" nil]))
 )
 (setq url-cookie-secure-storage
  '((".github.com"
-  [url-cookie "logged_in" "no" "21-Sep-2034 12:39:13.00 GMT" "/" ".github.com" t]
-  [url-cookie "HttpOnly" nil "21-Sep-2034 12:39:13.00 GMT" "/" ".github.com" t]))
+  [url-cookie "HttpOnly" nil "21-Sep-2034 12:39:13.00 GMT" "/" ".github.com" t]
+  [url-cookie "logged_in" "no" "21-Sep-2034 12:39:13.00 GMT" "/" ".github.com" t]))
 )
 
 ;; Local Variables:
