@@ -73,6 +73,8 @@
 (evil-ex-define-cmd "ms" 'magit-status)
 (evil-ex-define-cmd "mc" 'magit-commit)
 (evil-ex-define-cmd "lb" 'list-buffers)
+(evil-ex-define-cmd "sb" 'switch-to-buffer)
+(evil-ex-define-cmd "ex" 'execute-extended-command)
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
   :keymap (make-sparse-keymap))
