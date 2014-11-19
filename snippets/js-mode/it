@@ -1,6 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: defparameter
-# key: defparameter
+# name: it
+# key: it
 # binding: direct-keybinding
 # --
-defparameter $1 $2 "$0"
+it('$1', function($2) {
+  $3
+});$0

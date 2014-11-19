@@ -1,6 +1,8 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: defparameter
-# key: defparameter
+# name: vefun
+# key: vefun
 # binding: direct-keybinding
 # --
-defparameter $1 $2 "$0"
+var $1 = exports.$1 = function($2) {
+  $3
+};$0
