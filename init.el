@@ -6,7 +6,7 @@
                          ("marmalade" . "http://marmalade-repo.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(ac-geiser ac-sly auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash dockerfile-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg julia-mode load-theme-buffer-local magit markdown-mode neotree omnisharp org org-present popup punctuality-logger quack rainbow-delimiters sly smart-tab smartparens solarized-theme tern undo-tree)
+(defvar package-list '(ac-geiser ac-sly auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash dockerfile-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg julia-mode load-theme-buffer-local magit markdown-mode neotree omnisharp org org-present popup punctuality-logger quack rainbow-delimiters sly smart-tab solarized-theme tern undo-tree)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
