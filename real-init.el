@@ -122,6 +122,10 @@
   (evil-repl-smart newline-and-indent
                    sly-mrepl-return))
 
+(defun my-sly-mode-hook ()
+    "My sly-mode hook."
+  (sly-company-mode))
+
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
@@ -168,6 +172,22 @@
   "My clojurescript-mode-hook."
   (common-lispy-hooks))
 
+(defun my-html-mode-hook ()
+  "My html-mode hook."
+  (linum-mode)
+  (evil-smart-indent))
+
+(defun my-shell-mode-hook ()
+  "My shell-mode-hook."
+  (linum-mode)
+  (evil-smart-indent))
+
+(defun my-haskell-mode-hook ()
+  "My haskell-mode-hook."
+  (linum-mode)
+  (turn-on-haskell-simple-indent)
+  (evil-smart-indent))
+
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
   (org-present-big)
@@ -208,6 +228,9 @@
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
+(add-hook 'html-mode-hook 'my-html-mode-hook)
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+(add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
