@@ -3,15 +3,6 @@
 ;;; This is my real personal start-up file for Emacs.
 ;;; Code:
 
-(defun emacs-welcome ()
-  "This function will print a welcome message in *scratch*."
-  (progn
-    (other-window 1)
-    (animate-string (concat ";; Welcome to "
-                            (substring (emacs-version) 0 16)
-                            ".")
-                    0 1)))
-
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
 
@@ -33,7 +24,6 @@
 (require 'presentation)
 (require 'punctuality-logger)
 (require 'rainbow-delimiters)
-(require 'smart-tab)
 (require 'tern)
 (require 'yasnippet)
 
@@ -75,9 +65,11 @@
 (evil-ex-define-cmd "lb" 'list-buffers)
 (evil-ex-define-cmd "sb" 'switch-to-buffer)
 (evil-ex-define-cmd "ex" 'execute-extended-command)
+(evil-ex-define-cmd "ms" 'magit-status)
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
   :keymap (make-sparse-keymap))
+(evil-set-initial-state 'org-present-mode 'emacs)
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
@@ -95,10 +87,16 @@
 (savehist-mode 1) ; persist minibuffer history across sessions
 (setq savehist-file "~/.emacs.d/savehist") ; set file to save history
 (setq ring-bell-function 'ignore)     ; stop bell
-(global-smart-tab-mode 1)             ; enable smart tabbing
 (global-flycheck-mode)                ; enable syntax checking
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+
+; enable autocompletion
+(global-company-mode)
+(add-to-list 'company-backends
+             '(company-c-headers company-irony
+                                 company-tern
+                                 sly-company))
 
 ; enable & configure yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
@@ -119,11 +117,14 @@
        (setq inferior-lisp-program "/usr/bin/sbcl")))
 (defun my-sly-mrepl-mode-hook ()
   "My sly-mrepl-hook."
-  (set-up-sly-ac)
   (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
   (rainbow-delimiters-mode)
   (evil-repl-smart newline-and-indent
                    sly-mrepl-return))
+
+(defun my-sly-mode-hook ()
+    "My sly-mode hook."
+  (sly-company-mode))
 
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
@@ -134,24 +135,15 @@
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
   (evil-repl-smart geiser-repl--newline-and-indent
-                   geiser-repl--maybe-send)
-  (ac-geiser-setup))
+                   geiser-repl--maybe-send))
 
 (defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
   (rainbow-delimiters-mode)
-  (setq ac-sources '(ac-source-functions
-                     ac-source-variables
-                     ac-source-features
-                     ac-source-symbols
-                     ac-source-words-in-same-mode-buffers))
-  (auto-complete-mode 1)
   (evil-repl-smart newline-and-indent ielm-return))
 
 (defun my-lisp-mode-hook ()
   "My lisp-mode-hook."
-  (auto-complete-mode t)
-  (set-up-sly-ac)
   (common-lispy-hooks))
 
 (defun my-scheme-mode-hook ()
@@ -160,7 +152,6 @@
 
 (defun my-geiser-mode-hook ()
   "My geiser-mode-hook."
-  (ac-geiser-setup)
   (common-lispy-hooks))
 
 (defun my-javascript-mode-hook ()
@@ -185,6 +176,16 @@
     "My haskell-mode-hook."
   (linum-mode)
   (haskell-indentation-mode))
+
+(defun my-html-mode-hook ()
+  "My html-mode hook."
+  (linum-mode)
+  (evil-smart-indent))
+
+(defun my-shell-mode-hook ()
+  "My shell-mode-hook."
+  (linum-mode)
+  (evil-smart-indent))
 
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
@@ -226,6 +227,8 @@
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
+(add-hook 'html-mode-hook 'my-html-mode-hook)
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
@@ -238,25 +241,6 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 (defvaralias 'js-indent-level 'tab-width)
-
-; enable autocompletion popup
-(when (require 'auto-complete-config nil 'noerror)
-  (add-to-list 'ac-modes '(emacs-lisp-mode inferior-emacs-lisp-mode
-                           ecmascript-mode javascript-mode js-mode js2-mode
-                           sly-mrepl-mode sly-mode lisp-mode
-                           scheme-mode geiser-repl-mode))
-  (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
-  (setq ac-comphist-file "~/.emacs.d/ac-comphist.dat")
-  (ac-config-default)
-  (global-auto-complete-mode t)
-  (auto-complete-mode t)
-
-  ; dirty fix for having AC everywhere
-  (define-globalized-minor-mode real-global-auto-complete-mode
-    auto-complete-mode (lambda ()
-                         (if (not (minibufferp (current-buffer)))
-                             (auto-complete-mode 1))))
-  (real-global-auto-complete-mode t))
 
 ; set directory to save backup files
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))

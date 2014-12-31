@@ -10,3 +10,5 @@ image-dired/
 url/
 sessions/
 scripts/orientation.el
+init.fas
+init.lib

@@ -2,11 +2,11 @@
 ;;; Commentary:
 ;;; This is my personal start-up file for Emacs.
 ;;; Code:
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")
+(setq package-archives '(("marmalade" . "http://marmalade-repo.org/packages/")
+                         ("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(ac-geiser ac-sly auto-complete cider clojure-mode clojure-test-mode clojurescript-mode dash dockerfile-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg julia-mode load-theme-buffer-local magit markdown-mode neotree omnisharp org org-present popup punctuality-logger quack rainbow-delimiters sly smart-tab solarized-theme tern undo-tree)
+(defvar package-list '(cider clojure-mode clojure-test-mode clojurescript-mode company company-c-headers company-irony company-tern dash dockerfile-mode emmet-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg haskell-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present php-extras popup punctuality-logger quack rainbow-delimiters sly sly-company solarized-theme tern undo-tree web-mode yasnippet)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
