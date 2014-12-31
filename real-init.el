@@ -76,6 +76,7 @@
 (load-theme 'solarized-dark t)
 
 ; enable/disable certain features
+(setq column-number-mode t)           ; enable column # display in modeline
 (setq inhibit-startup-screen t)       ; disable start screen
 (scroll-bar-mode -1)                  ; disable scroll bar
 (if (fboundp 'horizontal-scroll-bar-mode)
