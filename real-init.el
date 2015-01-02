@@ -94,6 +94,7 @@
 
 ; enable autocompletion
 (global-company-mode)
+(setq company-idle-delay 0.1)
 (add-to-list 'company-backends
              '(company-c-headers company-irony
                                  company-tern
