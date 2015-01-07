@@ -189,6 +189,10 @@
   (linum-mode)
   (evil-smart-indent))
 
+(defun my-org-mode-hook ()
+  "My org-mode hook."
+  (setq org-src-fontify-natively t))
+
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
   (org-present-big)
@@ -230,8 +234,9 @@
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
 (add-hook 'html-mode-hook 'my-html-mode-hook)
-(add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(add-hook 'shell-mode-hook 'my-shell-mode-hook)
+(add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
