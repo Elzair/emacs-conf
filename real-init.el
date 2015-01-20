@@ -189,6 +189,10 @@
   (linum-mode)
   (evil-smart-indent))
 
+(defun my-eshell-mode-hook ()
+    "My eshell-mode-hook."
+  (setq eshell-path-env "~/.cabal/bin:/usr/bin:/usr/local/bin:/bin:/usr/games"))
+
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
   (org-present-big)
@@ -232,6 +236,7 @@
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
