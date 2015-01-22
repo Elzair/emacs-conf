@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: vegfun
+# key: vegfun
+# binding: direct-keybinding
+# --
+var $1 = exports.$1 = function*($2) {
+  $3
+}$0
