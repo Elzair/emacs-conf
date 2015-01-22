@@ -189,6 +189,10 @@
   (linum-mode)
   (evil-smart-indent))
 
+(defun my-eshell-mode-hook ()
+    "My eshell-mode-hook."
+  (setq eshell-path-env "/usr/bin:/usr/local/bin:/bin:/usr/games"))
+
 (defun my-org-mode-hook ()
   "My org-mode hook."
   (setq org-src-fontify-natively t))
@@ -235,6 +239,7 @@
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
 (add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
