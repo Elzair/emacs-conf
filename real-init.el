@@ -91,6 +91,7 @@
 (global-flycheck-mode)                ; enable syntax checking
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+(custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux"))
 
 ; enable autocompletion
 (global-company-mode)
@@ -191,7 +192,7 @@
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
-  (setq eshell-path-env "/usr/bin:/usr/local/bin:/bin:/usr/games"))
+  (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
 
 (defun my-org-mode-hook ()
   "My org-mode hook."
