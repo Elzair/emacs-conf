@@ -100,6 +100,7 @@
              '(company-c-headers company-irony
                                  company-tern
                                  sly-company))
+(company-quickhelp-mode 1)            ; enable documentaion popup
 
 ; enable & configure yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
