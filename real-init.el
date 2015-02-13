@@ -189,8 +189,7 @@
 (defun my-rust-mode-hook ()
     "My rust-mode-hook."
     (linum-mode)
-    (evil-smart-indent)
-    (setq rust-indent-offset 2))
+    (evil-smart-indent))
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
