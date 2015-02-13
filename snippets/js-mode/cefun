@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cefun
+# key: cefun
+# binding: direct-keybinding
+# --
+const $1 = exports.$1 = function($2) {
+  $3
+};$0

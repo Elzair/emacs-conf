@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cfun
+# key: cfun
+# binding: direct-keybinding
+# --
+const $1 = function($2) {
+  $3
+};$0
