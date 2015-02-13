@@ -91,6 +91,7 @@
 (global-flycheck-mode)                ; enable syntax checking
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+(custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux"))
 
 ; enable autocompletion
 (global-company-mode)
@@ -99,6 +100,7 @@
              '(company-c-headers company-irony
                                  company-tern
                                  sly-company))
+(company-quickhelp-mode 1)            ; enable documentaion popup
 
 ; enable & configure yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
@@ -184,14 +186,19 @@
   (linum-mode)
   (evil-smart-indent))
 
+(defun my-rust-mode-hook ()
+    "My rust-mode-hook."
+    (linum-mode)
+    (evil-smart-indent))
+
+(defun my-eshell-mode-hook ()
+    "My eshell-mode-hook."
+  (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
+
 (defun my-shell-mode-hook ()
   "My shell-mode-hook."
   (linum-mode)
   (evil-smart-indent))
-
-(defun my-eshell-mode-hook ()
-    "My eshell-mode-hook."
-  (setq eshell-path-env "/usr/bin:/usr/local/bin:/bin:/usr/games"))
 
 (defun my-org-mode-hook ()
   "My org-mode hook."
@@ -237,8 +244,9 @@
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)
 (add-hook 'clojure-mode-hook 'my-clojure-mode-hook)
 (add-hook 'clojurescript-mode-hook 'my-clojurescript-mode-hook)
-(add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
+(add-hook 'html-mode-hook 'my-html-mode-hook)
+(add-hook 'rust-mode-hook 'my-rust-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
