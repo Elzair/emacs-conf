@@ -250,7 +250,7 @@
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
-(add-hook 'org-present-mode-ook 'my-org-present-mode-hook)
+(add-hook 'org-present-mode-hook 'my-org-present-mode-hook)
 (add-hook 'org-present-mode-quit-hook 'my-org-present-mode-quit-hook)
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
 (add-hook 'image-after-revert-hook 'my-image-after-revert-hook)
