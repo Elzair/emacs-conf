@@ -1,0 +1,12 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: ifeiel
+# key: ifeiel
+# binding: direct-keybinding
+# --
+if ${1:cond1} {
+  ${2:body1}
+} else if ${3:cond2} {
+  ${4:body2}
+} else {
+  ${5:body3}
+}$0
