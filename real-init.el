@@ -191,6 +191,11 @@
     (linum-mode)
     (evil-smart-indent))
 
+(defun my-gnu-apl-mode-hook ()
+    "My gnu-apl-mode-hook."
+    (linum-mode)
+    ())
+
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
   (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
