@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: pfn
+# key: pfn
+# binding: direct-keybinding
+# --
+pub fn ${1:name}($2) {
+  ${3:body}
+}$0

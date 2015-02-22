@@ -1,0 +1,9 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: match
+# key: match
+# binding: direct-keybinding
+# --
+match ${1:expr} {
+  ${2:cond1} => ${3:res1},
+  ${4:cond2} => ${4:res2},
+}$0
