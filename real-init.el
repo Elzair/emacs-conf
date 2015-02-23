@@ -196,16 +196,14 @@
     (linum-mode)
     (evil-smart-indent))
 
-<<<<<<< HEAD
 (defun my-j-mode-hook ()
     "My j-mode-hook."
     (linum-mode))
-=======
+
 (defun my-gnu-apl-mode-hook ()
     "My gnu-apl-mode-hook."
     (linum-mode)
     ())
->>>>>>> 77b97a6713c2e65720ebb480e5e4c6fdb5b52c85
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
