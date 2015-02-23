@@ -115,6 +115,9 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
+; Ensure octave-mode comes up with .m files
+(add-to-list 'load-path '("\\.m$" . octave-mode))
+
 ; configure sly
 (setq sly-contribs '(sly-autodoc sly-fancy))
 (cond ((string-match "darwin" system-configuration)
