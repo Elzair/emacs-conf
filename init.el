@@ -6,7 +6,7 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(android-mode cider clojure-mode clojure-test-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg haskell-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
+(defvar package-list '(android-mode cider clojure-mode clojure-test-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader flycheck flycheck-pos-tip geiser goto-chg haskell-mode j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
@@ -38,6 +38,7 @@ and install the package."
  ;; If there is more than one, they won't work right.
  '(android-mode-sdk-dir "/opt/android-sdk-linux")
  '(flycheck-display-errors-function (function flycheck-pos-tip-error-messages))
+ '(j-console-cmd "ijconsole")
  '(magit-use-overlays nil)
  '(punctuality-logger-use-version-control t))
 (custom-set-faces

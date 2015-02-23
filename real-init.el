@@ -5,6 +5,7 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
+(add-to-list 'load-path "~/.emacs.d/gnu-apl-mode/")
 
 (package-initialize)
 
@@ -16,6 +17,7 @@
 (require 'evil-repl)
 (require 'evil-indent)
 (require 'flycheck)
+(require 'gnu-apl-mode)
 (require 'key-chord)
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
@@ -191,6 +193,10 @@
     (linum-mode)
     (evil-smart-indent))
 
+(defun my-j-mode-hook ()
+    "My j-mode-hook."
+    (linum-mode))
+
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
   (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
@@ -247,6 +253,7 @@
 (add-hook 'haskell-mode-hook 'my-haskell-mode-hook)
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'rust-mode-hook 'my-rust-mode-hook)
+(add-hook 'j-mode-hook 'my-j-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
