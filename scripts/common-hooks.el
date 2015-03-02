@@ -9,8 +9,7 @@
 (defun common-lispy-hooks ()
   "This function is useful for modes to edit Lisp code."
     (linum-mode)
-    (rainbow-delimiters-mode)
-    (evil-smart-indent))
+    (rainbow-delimiters-mode))
 
 (provide 'common-hooks)
 ;;; common-hooks.el ends here
