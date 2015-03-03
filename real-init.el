@@ -202,8 +202,11 @@
 
 (defun my-gnu-apl-mode-hook ()
     "My gnu-apl-mode-hook."
-    (linum-mode)
-    ())
+    (linum-mode))
+
+(defun my-julia-mode-hook ()
+    "My julia-mode-hook."
+    (linum-mode))
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
@@ -262,6 +265,7 @@
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'rust-mode-hook 'my-rust-mode-hook)
 (add-hook 'j-mode-hook 'my-j-mode-hook)
+(add-hook 'julia-mode-hook 'my-julia-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
