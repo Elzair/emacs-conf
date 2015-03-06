@@ -208,6 +208,10 @@
     "My julia-mode-hook."
     (linum-mode))
 
+(defun my-octave-mode-hook ()
+    "My octave-mode-hook."
+    (linum-mode))
+
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
   (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
@@ -266,6 +270,7 @@
 (add-hook 'rust-mode-hook 'my-rust-mode-hook)
 (add-hook 'j-mode-hook 'my-j-mode-hook)
 (add-hook 'julia-mode-hook 'my-julia-mode-hook)
+(add-hook 'octave-mode-hook 'my-octave-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
