@@ -94,6 +94,9 @@
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
 (custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux"))
+(add-to-list 'exec-path "~/Development/julia/julia")
+(setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
+(setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
 
 ; enable autocompletion
 (global-company-mode)
@@ -214,7 +217,7 @@
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
-  (setq eshell-path-env "/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
+  (setq eshell-path-env "~/Development/julia:/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
 
 (defun my-shell-mode-hook ()
   "My shell-mode-hook."
