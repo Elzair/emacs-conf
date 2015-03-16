@@ -1,6 +1,8 @@
-;; -*- emacs-lisp -*- <15/03/05 12:01:01 /home/elzair/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <15/03/12 15:45:38 /home/elzair/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-((["scp" nil "https" nil nil]
+((["scp" nil "remcp" nil nil]
+  nil)
+ (["scp" nil "remsh" nil nil]
   nil))

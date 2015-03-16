@@ -94,6 +94,7 @@
 (global-auto-revert-mode 1)           ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
 (custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux"))
+(setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 
 ; enable autocompletion
 (global-company-mode)
