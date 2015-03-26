@@ -132,7 +132,8 @@
   (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
   (rainbow-delimiters-mode)
   (evil-repl-smart newline-and-indent
-                   sly-mrepl-return))
+                   sly-mrepl-return)
+  (common-comint-hooks))
 
 (defun my-sly-mode-hook ()
     "My sly-mode hook."
@@ -153,6 +154,14 @@
   "My ielm-mode-hook."
   (rainbow-delimiters-mode)
   (evil-repl-smart newline-and-indent ielm-return))
+
+(defun my-inferior-octave-mode-hook ()
+    "My inferior-octave-mode-hook."
+  (common-comint-hooks))
+
+(defun my-inferior-ess-mode-hook ()
+    "My inferior-ess-mode-hook."
+    (common-comint-hooks))
 
 (defun my-lisp-mode-hook ()
   "My lisp-mode-hook."
@@ -269,6 +278,8 @@
 (add-hook 'sly-mrepl-mode-hook 'my-sly-mrepl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
+(add-hook 'inferior-octave-mode-hook 'my-inferior-octave-mode-hook)
+(add-hook 'inferior-ess-mode-hook 'my-inferior-ess-mode-hook)
 (add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)

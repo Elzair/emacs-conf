@@ -11,5 +11,12 @@
     (linum-mode)
     (rainbow-delimiters-mode))
 
+(defun common-comint-hooks ()
+    "This function provides easier history access in comint modes."
+  (define-key evil-insert-state-local-map
+      (kbd "<up>") 'comint-previous-input)
+  (define-key evil-insert-state-local-map
+      (kbd "<down>") 'comint-next-input))
+
 (provide 'common-hooks)
 ;;; common-hooks.el ends here
