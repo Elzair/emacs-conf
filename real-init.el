@@ -240,6 +240,11 @@
 
 (defun my-neotree-mode-hook ()
   "My neotree-mode-hook."
+  (define-key evil-normal-state-local-map (kbd "<down-mouse-1>")
+    (lambda (event)
+      (interactive "e")
+      (mouse-set-point event)
+      (neotree-enter)))
   (define-key evil-normal-state-local-map (kbd "TAB") 'neotree-enter)
   (define-key evil-normal-state-local-map (kbd "SPC") 'neotree-enter)
   (define-key evil-normal-state-local-map (kbd "q") 'neotree-hide)
