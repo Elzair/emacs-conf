@@ -150,6 +150,12 @@
   (evil-repl-smart geiser-repl--newline-and-indent
                    geiser-repl--maybe-send))
 
+(defun my-cider-repl-mode-hook ()
+    "My cider-repl-mode-hook."
+    (setq cider-repl-use-clojure-font-lock t)
+    (evil-repl-smart cider-repl-newline-and-indent
+                     cider-repl-return))
+
 (defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
   (rainbow-delimiters-mode)
@@ -249,7 +255,7 @@
 
 (defun my-neotree-mode-hook ()
   "My neotree-mode-hook."
-  (define-key evil-normal-state-local-map (kbd "<down-mouse-1>")
+  (define-key evil-normal-state-local-map (kbd "<mouse-1>")
     (lambda (event)
       (interactive "e")
       (mouse-set-point event)
@@ -277,6 +283,7 @@
 
 (add-hook 'sly-mrepl-mode-hook 'my-sly-mrepl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
+(add-hook 'cider-repl-mode-hook 'my-cider-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
 (add-hook 'inferior-octave-mode-hook 'my-inferior-octave-mode-hook)
 (add-hook 'inferior-ess-mode-hook 'my-inferior-ess-mode-hook)
