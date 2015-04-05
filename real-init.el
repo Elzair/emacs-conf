@@ -119,17 +119,14 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
-(setq ispell-program-name (executable-find "aspell"))
+(setq ispell-program-name (executable-find "hunspell"))
 
 ; Ensure octave-mode comes up with .m files
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
 ; configure sly
 (setq sly-contribs '(sly-autodoc sly-fancy))
-(cond ((string-match "darwin" system-configuration)
-       (setq inferior-lisp-program "/usr/local/bin/sbcl"))
-      ((string-match "linux" system-configuration)
-       (setq inferior-lisp-program "/usr/bin/sbcl")))
+(setq inferior-lisp-program (executable-find "sbcl"))
 (defun my-sly-mrepl-mode-hook ()
   "My sly-mrepl-hook."
   (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
@@ -240,7 +237,7 @@
 
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
-  (setq eshell-path-env "~/Development/julia:/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
+  (setq eshell-path-env "~/Development/julia:/usr/bin:/usr/local/bin:/bin:/usr/games"))
 
 (defun my-shell-mode-hook ()
   "My shell-mode-hook."
