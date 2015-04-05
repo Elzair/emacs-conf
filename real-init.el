@@ -17,6 +17,7 @@
 (require 'evil-repl)
 (require 'evil-indent)
 (require 'flycheck)
+(require 'flyspell)
 (require 'gnu-apl-mode)
 (require 'key-chord)
 (require 'frame-cmds)
@@ -118,6 +119,8 @@
   '(custom-set-variables
     '(flycheck-display-errors-function #'flycheck-pos-tip-error-messages)))
 
+(setq ispell-program-name (executable-find "aspell"))
+
 ; Ensure octave-mode comes up with .m files
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 
@@ -151,10 +154,11 @@
                    geiser-repl--maybe-send))
 
 (defun my-cider-repl-mode-hook ()
-    "My cider-repl-mode-hook."
-    (setq cider-repl-use-clojure-font-lock t)
-    (evil-repl-smart cider-repl-newline-and-indent
-                     cider-repl-return))
+  "My cider-repl-mode-hook."
+  (setq cider-repl-use-clojure-font-lock t)
+  (rainbow-delimiters-mode)
+  (evil-repl-smart cider-repl-newline-and-indent
+                   cider-repl-return))
 
 (defun my-ielm-mode-hook ()
   "My ielm-mode-hook."
@@ -162,12 +166,12 @@
   (evil-repl-smart newline-and-indent ielm-return))
 
 (defun my-inferior-octave-mode-hook ()
-    "My inferior-octave-mode-hook."
+  "My inferior-octave-mode-hook."
   (common-comint-hooks))
 
 (defun my-inferior-ess-mode-hook ()
-    "My inferior-ess-mode-hook."
-    (common-comint-hooks))
+  "My inferior-ess-mode-hook."
+  (common-comint-hooks))
 
 (defun my-lisp-mode-hook ()
   "My lisp-mode-hook."
@@ -230,6 +234,10 @@
     "My octave-mode-hook."
     (linum-mode))
 
+(defun my-c-mode-hook ()
+    "My c-mode-hook."
+  (linum-mode))
+
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
   (setq eshell-path-env "~/Development/julia:/opt/android-sdk-linux/build-tools:/opt/android-sdk-linux/platform-tools:/opt/android-sdk-linux/tools:/usr/bin:/usr/local/bin:/bin:/usr/games"))
@@ -240,8 +248,12 @@
   (evil-smart-indent))
 
 (defun my-org-mode-hook ()
-  "My org-mode hook."
-  (setq org-src-fontify-natively t))
+  "My org-mode-hook."
+  (setq org-src-fontify-natively t)
+  (setq-local ispell-skip-region-alist
+              (append ispell-skip-region-alist
+                      '("#\\+BEGIN_SRC" . "#\\+END_SRC")))
+  (flyspell-mode 1))
 
 (defun my-org-present-mode-hook ()
   "My org-present-mode hook."
@@ -302,6 +314,7 @@
 (add-hook 'gnu-apl-mode-hook 'my-gnu-apl-mode-hook)
 (add-hook 'julia-mode-hook 'my-julia-mode-hook)
 (add-hook 'octave-mode-hook 'my-octave-mode-hook)
+(add-hook 'c-mode-hook 'my-c-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
