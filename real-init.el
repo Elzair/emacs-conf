@@ -142,7 +142,6 @@
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
-  (setq geiser-active-implementations 'guile)
   (setq quack-fontify-style 'emacs)
   (rainbow-delimiters-mode)
   (setq geiser-repl-query-on-kill-p nil)
@@ -180,7 +179,8 @@
 
 (defun my-geiser-mode-hook ()
   "My geiser-mode-hook."
-  (common-lispy-hooks))
+  (common-lispy-hooks)
+  (setq-local geiser-scheme-implementation racket))
 
 (defun my-javascript-mode-hook ()
   "My javascript-mode-hook."
