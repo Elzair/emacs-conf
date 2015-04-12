@@ -127,7 +127,6 @@
 ; & racket-mode comes up with .rkt files
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
-(add-to-list 'auto-mode-alist '("\\.R$" . ess-mode))
 
 ; configure sly
 (setq sly-contribs '(sly-autodoc sly-fancy))
