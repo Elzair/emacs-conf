@@ -122,7 +122,9 @@
 (setq ispell-program-name (executable-find "hunspell"))
 
 ; Ensure octave-mode comes up with .m files
+; & racket-mode comes up with .rkt files
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
+(add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
 
 ; configure sly
 (setq sly-contribs '(sly-autodoc sly-fancy))
@@ -139,6 +141,7 @@
     "My sly-mode hook."
   (sly-company-mode))
 
+(setq geiser-activate-implementation '(guile))
 (defun my-geiser-repl-mode-hook ()
   "My geiser-repl-mode-hook."
   (require 'quack)
@@ -148,6 +151,11 @@
   (setq geiser-repl-use-other-window nil)
   (evil-repl-smart geiser-repl--newline-and-indent
                    geiser-repl--maybe-send))
+
+(defun my-racket-repl-mode-hook ()
+    "My racket-repl-mode-hook."
+    (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
+    (rainbow-delimiters-mode))
 
 (defun my-cider-repl-mode-hook ()
   "My cider-repl-mode-hook."
@@ -179,8 +187,11 @@
 
 (defun my-geiser-mode-hook ()
   "My geiser-mode-hook."
-  (common-lispy-hooks)
-  (setq-local geiser-scheme-implementation racket))
+  (common-lispy-hooks))
+
+(defun my-racket-mode-hook ()
+  "My racket-mode-hook."
+  (common-lispy-hooks))
 
 (defun my-javascript-mode-hook ()
   "My javascript-mode-hook."
@@ -292,6 +303,7 @@
 
 (add-hook 'sly-mrepl-mode-hook 'my-sly-mrepl-mode-hook)
 (add-hook 'geiser-repl-mode-hook 'my-geiser-repl-mode-hook)
+(add-hook 'racket-repl-mode-hook 'my-racket-repl-mode-hook)
 (add-hook 'cider-repl-mode-hook 'my-cider-repl-mode-hook)
 (add-hook 'ielm-mode-hook 'my-ielm-mode-hook)
 (add-hook 'inferior-octave-mode-hook 'my-inferior-octave-mode-hook)
@@ -299,6 +311,7 @@
 (add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
 (add-hook 'geiser-mode-hook 'my-geiser-mode-hook)
 (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+(add-hook 'racket-mode-hook 'my-racket-mode-hook)
 (add-hook 'js-mode-hook 'my-javascript-mode-hook)
 (add-hook 'js2-mode-hook 'my-javascript-mode-hook)
 (add-hook 'emacs-lisp-mode-hook 'my-emacs-lisp-mode-hook)

@@ -1,9 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: defn
-# key: defn
+# name: definet
+# key: definet
 # binding: direct-keybinding
 # --
-defn ${1:name}
-  "${2:docstr}"
-  ([$3]
-   (${4:body})$5)$0
+define ${1:name} : ${2:type} ${3:value}$0

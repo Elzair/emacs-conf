@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: define-type
+# key: define-type
+# binding: direct-keybinding
+# --
+define-type ${1:name}
+  [${2:constructor} (${3:variable} : ${4:type})]$0 
