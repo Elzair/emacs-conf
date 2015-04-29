@@ -71,6 +71,8 @@
   :keymap (make-sparse-keymap))
 (evil-set-initial-state 'org-present-mode 'emacs)
 
+(neotree-dir (getenv "HOME"))
+
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
 (load-theme 'solarized-dark t)
@@ -348,7 +350,7 @@
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
 
-(neotree)
+;(neotree-show)
 
 ; map F11 to fullscreen
 (global-set-key [f11] 'toggle-presentation)
