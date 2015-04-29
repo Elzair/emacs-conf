@@ -1,8 +1,41 @@
-;; -*- emacs-lisp -*- <15/03/12 15:45:38 /home/elzair/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <15/04/15 17:48:45 /home/elzair/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
-((["scp" nil "remcp" nil nil]
-  nil)
- (["scp" nil "remsh" nil nil]
-  nil))
+((["sudo" "root" "thinkpenguin.attlocal.net" nil nil]
+  ("uname" "Linux 3.19.3-3-ARCH")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("remote-shell" "/bin/sh")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("readlink" "\\readlink")
+  ("stat" "\\stat")
+  ("file-exists" "test -e")
+  ("id" "/bin/id")
+  ("gid-integer" 0)
+  ("gid-string" "root")
+  ("uid-integer" 0)
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("gvfs-monitor-dir" "/bin/gvfs-monitor-dir"))
+ (["sudo" "root" "thinkpenguin" nil nil]
+  ("uname" "Linux 3.19.3-3-ARCH")
+  ("test" "test")
+  ("remote-path"
+   ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
+  ("remote-shell" "/bin/sh")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("readlink" "\\readlink")
+  ("stat" "\\stat")
+  ("file-exists" "test -e")
+  ("ls" "/bin/ls --color=never")
+  ("perl-file-spec" t)
+  ("perl-cwd-realpath" t)
+  ("perl" "\\perl")
+  ("gvfs-monitor-dir" "/bin/gvfs-monitor-dir")
+  ("id" "/bin/id")
+  ("gid-string" "root")
+  ("gid-integer" 0)
+  ("uid-integer" 0)))

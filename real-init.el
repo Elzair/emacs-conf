@@ -25,7 +25,6 @@
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
 (require 'neotree)
-(require 'orientation)
 (require 'presentation)
 (require 'punctuality-logger)
 (require 'rainbow-delimiters)
@@ -42,18 +41,14 @@
 (evil-leader/set-key
   "e v" (lambda ()
           (interactive)
-          (if (and (boundp 'emacs-screen-orientation)
-                   (equal emacs-screen-orientation "vertical"))
-              (evil-window-new 40 "~/.emacs.d/real-init.el")
-            (evil-window-vnew 80 "~/.emacs.d/real-init.el")))
-  "p v" (lambda ()
-          (interactive)
-          (if (and (boundp 'emacs-screen-orientation)
-                   (equal emacs-screen-orientation "vertical"))
-              (evil-window-new 40 "~/.emacs.d/init.el")
-            (evil-window-vnew 80 "~/.emacs.d/init.el")))
+          (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
+          (neotree-dir user-emacs-directory)
+          (neo-open-file (concat user-emacs-directory "real-init.el")))
   "s v" (lambda ()
           (interactive)
+          (neotree-dir neotree-pushed-dir)
+          (setq neotree-pushed-dir nil)
+          (kill-buffer "real-init.el")
           (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
@@ -248,6 +243,11 @@
     "My c-mode-hook."
   (linum-mode))
 
+(defun my-ess-mode-hook ()
+  "My ess-mode-hook."
+  (linum-mode)
+  (ess-toggle-S-assign nil))
+
 (defun my-eshell-mode-hook ()
     "My eshell-mode-hook."
   (setq eshell-path-env "~/Development/julia:/usr/bin:/usr/local/bin:/bin:/usr/games"))
@@ -327,6 +327,7 @@
 (add-hook 'julia-mode-hook 'my-julia-mode-hook)
 (add-hook 'octave-mode-hook 'my-octave-mode-hook)
 (add-hook 'c-mode-hook 'my-c-mode-hook)
+(add-hook 'ess-mode-hook 'my-ess-mode-hook)
 (add-hook 'eshell-mode-hook 'my-eshell-mode-hook)
 (add-hook 'shell-mode-hook 'my-shell-mode-hook)
 (add-hook 'org-mode-hook 'my-org-mode-hook)
@@ -341,6 +342,7 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 (defvaralias 'js-indent-level 'tab-width)
+(defvaralias ess-indent-level 'tab-width)
 
 ; set directory to save backup files
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
