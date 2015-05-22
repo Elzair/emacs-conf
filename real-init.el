@@ -71,7 +71,6 @@
   :keymap (make-sparse-keymap))
 (evil-set-initial-state 'org-present-mode 'emacs)
 
-(neotree-dir (getenv "HOME"))
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
@@ -338,6 +337,8 @@
 (add-hook 'neotree-mode-hook 'my-neotree-mode-hook)
 (add-hook 'image-after-revert-hook 'my-image-after-revert-hook)
 
+(neotree)
+
 ; set indentation options
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 2)
@@ -349,8 +350,6 @@
 ; set directory to save backup files
 (setq backup-directory-alist `((".*" . ,temporary-file-directory)))
 (setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
-
-;(neotree-show)
 
 ; map F11 to fullscreen
 (global-set-key [f11] 'toggle-presentation)
