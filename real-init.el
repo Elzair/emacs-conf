@@ -97,7 +97,13 @@
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
 
-; enable autocompletion
+; Configure org-babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . t)
+   (R  . t)))
+
+; Enable autocompletion
 (global-company-mode)
 (setq company-idle-delay 0.1)
 (add-to-list 'company-backends
@@ -106,7 +112,7 @@
                                  sly-company))
 (company-quickhelp-mode 1)            ; enable documentaion popup
 
-; enable & configure yasnippet
+; Enable & configure yasnippet
 (setq yas-snippet-dirs '("~/.emacs.d/snippets"))
 (yas-global-mode)                     ; enable snippets
 (define-key yas-minor-mode-map (kbd "<tab>") nil)
@@ -124,7 +130,7 @@
 (add-to-list 'auto-mode-alist '("\\.m$" . octave-mode))
 (add-to-list 'auto-mode-alist '("\\.rkt\\'" . racket-mode))
 
-; configure sly
+; Configure sly
 (setq sly-contribs '(sly-autodoc sly-fancy))
 (setq inferior-lisp-program (executable-find "sbcl"))
 (defun my-sly-mrepl-mode-hook ()
