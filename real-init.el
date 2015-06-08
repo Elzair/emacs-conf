@@ -354,8 +354,12 @@
 (defvaralias ess-indent-level 'tab-width)
 
 ; set directory to save backup files
-(setq backup-directory-alist `((".*" . ,temporary-file-directory)))
-(setq auto-save-file-name-transforms `((".*" ,temporary-file-directory t)))
+(setq backup-by-copying t
+      backup-directory-alist '(("." . "~/.saves"))
+      delete-old-versions t
+      kept-new-versions 6
+      kept-old-versions 2
+      version-control t)
 
 ; map F11 to fullscreen
 (global-set-key [f11] 'toggle-presentation)
