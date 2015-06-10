@@ -6,7 +6,7 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader ess flycheck flycheck-pos-tip geiser goto-chg haskell-mode j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
+(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader ess flycheck flycheck-pos-tip geiser goto-chg haskell-mode j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-if org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
