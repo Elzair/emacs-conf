@@ -41,6 +41,7 @@ and install the package."
  '(j-console-cmd "ijconsole")
  '(magit-use-overlays nil)
  '(org-hide-emphasis-markers t)
+ '(org-hide-leading-stars nil)
  '(punctuality-logger-use-version-control t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
