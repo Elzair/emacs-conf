@@ -25,6 +25,7 @@
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
 (require 'neotree)
+(require 'org-funcs)
 (require 'presentation)
 (require 'punctuality-logger)
 (require 'rainbow-delimiters)
