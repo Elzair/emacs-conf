@@ -29,8 +29,6 @@
 
 ;;; Code:
 
-(setf lexical-binding t)
-
 (require 'cl)
 (require 'package)
 
@@ -51,9 +49,9 @@
 
 (defun pkg-devel-get-package-desc (name &optional version)
   "This function outputs `package-desc' struct containing information on the package specified by NAME and VERSION."
-  (let ((pkg-name (if (boundp 'version)
+  (let ((pkg-name (if (stringp version)
                       (concat name "-" version)
-                    name)))
+                      name)))
     (remove-if-not #'(lambda (pkg)
                        (eq 0 (string-match pkg-name
                                            (package-desc-full-name pkg))))
@@ -74,7 +72,7 @@
 
 (defun pkg-devel-create-archive (name &optional path)
   "Create a .tar archive of the package specified by NAME and, optionally, PATH."
-  (let* ((path-def  (if (boundp 'path)
+  (let* ((path-def  (if (stringp path)
                         path
                         default-directory))
          (dir       (file-name-as-directory (expand-file-name name path-def)))
