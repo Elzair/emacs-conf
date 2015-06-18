@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t -*-
 ;;; pkg-devel.el --- Functions for elisp package development
 
 ;; Copyright © 2015 Philip Woods
@@ -30,29 +31,71 @@
 
 (setf lexical-binding t)
 
+(require 'cl)
 (require 'package)
+
+(defun pkg-devel-read-file (path)
+  "Returns the content of file indicated by PATH."
+  (with-temp-buffer
+    (insert-file-contents path)
+    (buffer-string)))
 
 (defun pkg-devel-get-installed-packages ()
   "This function retrieves a list of all installed elisp packages."
   (mapcar #'(lambda (pkg)
               (car pkg))
           (remove-if-not #'(lambda (pkg)
-                             (equal "installed"
-                                    (package-desc-status (car pkg))))
+                             (string-equal "installed"
+                                           (package-desc-status (car pkg))))
                          (package-menu--refresh nil))))
 
-(defun pkg-devel-get-package-desc (name version)
+(defun pkg-devel-get-package-desc (name &optional version)
   "This function outputs `package-desc' struct containing information on the package specified by NAME and VERSION."
-  (let ((pkg-name (concat name "-" version)))
-    (car (remove-if-not #'(lambda (pkg)
-                            (equal pkg-name (package-desc-full-name pkg)))
-                        (pkg-devel-get-installed-packages)))))
+  (let ((pkg-name (if (boundp 'version)
+                      (concat name "-" version)
+                    name)))
+    (remove-if-not #'(lambda (pkg)
+                       (eq 0 (string-match pkg-name
+                                           (package-desc-full-name pkg))))
+                   (pkg-devel-get-installed-packages))))
 
-(defun pkg-devel-create-archive (name version &optional path)
-    "Create a .tar archive of the package specified by NAME, VERSION and, optionally, PATH."
-    (when (null path)
-      (setf path "."))
-    (directory-files path t "^[^.]"))
+(defun pkg-devel-get-version (pkg-name elisp-files path)
+  "Get the version number for the package PKG-NAME with the ELISP-FILES at the given PATH."
+  (let* ((mult-file (remove-if-not #'(lambda (f)
+                                       (string-equal (concat pkg-name
+                                                             "-pkg.el")
+                                                     (file-name-nondirectory f)))
+                                   elisp-files))
+         (pkg-file  (expand-file-name (car mult-file) path))
+         (contents  (pkg-devel-read-file pkg-file))
+         (sexp      (car (read-from-string contents)))
+         (version   (nth 2 sexp)))
+    version))
+
+(defun pkg-devel-create-archive (name &optional path)
+  "Create a .tar archive of the package specified by NAME and, optionally, PATH."
+  (let* ((path-def  (if (boundp 'path)
+                        path
+                        default-directory))
+         (dir       (file-name-as-directory (expand-file-name name path-def)))
+         (files     (directory-files dir t "^[^.]"))
+         (rel-files (mapcar #'(lambda (f) (file-relative-name f path-def))
+                            files))
+         (el-files  (remove-if-not #'(lambda (f)
+                                       (string-equal "el"
+                                                     (file-name-extension f)))
+                                   rel-files))
+         
+         (version   (pkg-devel-get-version name el-files path-def))
+         (command   (concat "tar -cf "
+                            name
+                            "-"
+                            version
+                            ".tar "
+                            (mapconcat 'identity
+                                       rel-files
+                                       " "))))
+    command))
 
 (provide 'pkg-devel)
 ;;; pkg-devel.el ends here

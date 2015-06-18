@@ -41,6 +41,13 @@ and install the package."
  '(j-console-cmd "ijconsole")
  '(magit-use-overlays nil)
  '(org-hide-emphasis-markers t)
+ '(org-link-frame-setup
+   (quote
+    ((vm . vm-visit-folder-other-frame)
+     (vm-imap . vm-visit-imap-folder-other-frame)
+     (gnus . org-gnus-no-new-news)
+     (file . find-file)
+     (wl . wl-other-frame))))
  '(punctuality-logger-use-version-control t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
