@@ -57,49 +57,70 @@
                                            (package-desc-full-name pkg))))
                    (pkg-devel-get-installed-packages))))
 
-(defun pkg-devel-get-version (pkg-name elisp-files path)
-  "Get the version number for the package PKG-NAME with the ELISP-FILES at the given PATH."
-  (let* ((mult-file (remove-if-not #'(lambda (f)
-                                       (string-equal (concat pkg-name
+(defun pkg-devel-get-version (name path)
+  "Get the version number for the package NAME at the given PATH."
+  (let* ((dir       (concat path name))
+         (files     (directory-files dir t "^[^.]"))
+         (el-files  (remove-if-not #'(lambda (f)
+                                       (string-equal "el"
+                                                     (file-name-extension f)))
+                                   files))
+         (mult-file (remove-if-not #'(lambda (f)
+                                       (string-equal (concat name
                                                              "-pkg.el")
                                                      (file-name-nondirectory f)))
-                                   elisp-files))
+                                   el-files))
          (pkg-file  (expand-file-name (car mult-file) path))
          (contents  (pkg-devel-read-file pkg-file))
          (sexp      (car (read-from-string contents)))
          (version   (nth 2 sexp)))
     version))
 
-(defun pkg-devel-create-archive (name &optional path)
-  "Create a .tar archive of the package specified by NAME and, optionally, PATH."
-  (let* ((path-def  (if (stringp path)
-                        path
-                        default-directory))
-         (dir       (concat path-def name))
-         (files     (directory-files dir t "^[^.]"))
-         ;(rel-files (mapcar #'(lambda (f) (file-relative-name f path-def))
-         ;                   files))
-         (el-files  (remove-if-not #'(lambda (f)
-                                       (string-equal "el"
-                                                     (file-name-extension f)))
-                                   files))
-         
-         (version   (pkg-devel-get-version name el-files path-def))
+(defun pkg-devel-create-archive (name version path)
+  "Create a tar archive of the package specified by NAME, VERSION and PATH.
+Returns the file path to the new archive."
+  (let* ((dir       (concat path name))
+         (files     (directory-files dir t "^[^.]"))        
          (new-name  (concat name "-" version))
-         (new-dir   (concat path-def new-name))
-         )
-    ;(make-directory new-dir)
-    ;(shell-command command)
-    ;(command   (concat "cd "
-    ;                        path-def
-    ;                        "; tar -cf "
-    ;                        new-name
-    ;                        ".tar "
-    ;                        (mapconcat 'identity
-    ;                                   rel-files
-    ;                                   " ")))
-    new-name
-    ))
+         (new-dir   (concat path new-name))
+         (new-files (mapcar #'(lambda (f)
+                                (concat (file-name-as-directory new-dir)
+                                        (file-name-nondirectory f)))
+                            files))
+         (zip-files (mapcar* #'cons files new-files))
+         (rel-files (mapcar #'(lambda (f) (file-relative-name f path))
+                            new-files)))
+    ; Create directory name-version and copy files into it
+    (make-directory new-dir)
+    (mapc #'(lambda (z)
+              (copy-file (car z) (cdr z) t))
+          zip-files)
+    ; Use tar to create archive from new directory
+    (let ((command   (concat "cd "
+                             path
+                             "; tar -cf "
+                             new-name
+                             ".tar "
+                             (mapconcat 'identity
+                                        rel-files
+                                        " "))))
+      (shell-command command))
+    ; Delete new directory
+    (delete-directory new-dir t)
+    (concat new-dir ".tar")))
+
+(defun pkg-devel-refresh (pkg-dir)
+    "Reinstall the package whose name is the directory of the current buffer."
+    (interactive "DPackage Directory: ")
+    (let* ((pkg-dir-as-file (directory-file-name pkg-dir))
+           (name            (file-name-nondirectory pkg-dir-as-file))
+           (path            (file-name-directory    pkg-dir-as-file))
+           (version         (pkg-devel-get-version  name path))
+           (old-versions    (pkg-devel-get-package-desc name version)))
+      (mapc #'package-delete old-versions)
+      (let ((archive-file (pkg-devel-create-archive name version path)))
+        (package-install-file archive-file)
+        (delete-file archive-file))))
 
 (provide 'pkg-devel)
 ;;; pkg-devel.el ends here
