@@ -33,7 +33,7 @@
 (require 'package)
 
 (defun pkg-devel-read-file (path)
-  "Returns the content of file indicated by PATH."
+  "Returns as a string the contents of file indicated by PATH."
   (with-temp-buffer
     (insert-file-contents path)
     (buffer-string)))
