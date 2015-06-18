@@ -95,7 +95,7 @@
                             (mapconcat 'identity
                                        rel-files
                                        " "))))
-    command))
+    (shell-command command)))
 
 (provide 'pkg-devel)
 ;;; pkg-devel.el ends here
