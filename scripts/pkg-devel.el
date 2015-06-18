@@ -85,7 +85,9 @@
                                    rel-files))
          
          (version   (pkg-devel-get-version name el-files path-def))
-         (command   (concat "tar -cf "
+         (command   (concat "cd "
+                            path-def
+                            "; tar -cf "
                             name
                             "-"
                             version
