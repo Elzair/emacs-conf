@@ -75,27 +75,31 @@
   (let* ((path-def  (if (stringp path)
                         path
                         default-directory))
-         (dir       (file-name-as-directory (expand-file-name name path-def)))
+         (dir       (concat path-def name))
          (files     (directory-files dir t "^[^.]"))
-         (rel-files (mapcar #'(lambda (f) (file-relative-name f path-def))
-                            files))
+         ;(rel-files (mapcar #'(lambda (f) (file-relative-name f path-def))
+         ;                   files))
          (el-files  (remove-if-not #'(lambda (f)
                                        (string-equal "el"
                                                      (file-name-extension f)))
-                                   rel-files))
+                                   files))
          
          (version   (pkg-devel-get-version name el-files path-def))
-         (command   (concat "cd "
-                            path-def
-                            "; tar -cf "
-                            name
-                            "-"
-                            version
-                            ".tar "
-                            (mapconcat 'identity
-                                       rel-files
-                                       " "))))
-    (shell-command command)))
+         (new-name  (concat name "-" version))
+         (new-dir   (concat path-def new-name))
+         )
+    ;(make-directory new-dir)
+    ;(shell-command command)
+    ;(command   (concat "cd "
+    ;                        path-def
+    ;                        "; tar -cf "
+    ;                        new-name
+    ;                        ".tar "
+    ;                        (mapconcat 'identity
+    ;                                   rel-files
+    ;                                   " ")))
+    new-name
+    ))
 
 (provide 'pkg-devel)
 ;;; pkg-devel.el ends here
