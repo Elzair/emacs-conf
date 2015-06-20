@@ -66,34 +66,38 @@
 (evil-ex-define-cmd "lb" 'list-buffers)
 (evil-ex-define-cmd "sb" 'switch-to-buffer)
 (evil-ex-define-cmd "ex" 'execute-extended-command)
-(evil-ex-define-cmd "ms" 'magit-status)
+
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
   :keymap (make-sparse-keymap))
-(evil-set-initial-state 'org-present-mode 'emacs)
 
+(evil-set-initial-state 'org-present-mode 'emacs)   ; make `emacs-state' default state of `org-present-mode'
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
 (load-theme 'solarized-dark t)
 
 ; enable/disable certain features
-(setq column-number-mode t)           ; enable column # display in modeline
-(setq inhibit-startup-screen t)       ; disable start screen
-(scroll-bar-mode -1)                  ; disable scroll bar
+(setq column-number-mode t)                         ; enable column # display in modeline
+(setq inhibit-startup-screen t)                     ; disable start screen
+(scroll-bar-mode -1)                                ; disable scroll bar
 (if (fboundp 'horizontal-scroll-bar-mode)
-  (horizontal-scroll-bar-mode -1) ()) ; disable bottom scroll bar
-(tool-bar-mode -1)                    ; disable tool bar
-(setq initial-scratch-buffer nil)
-(setq mouse-autoselect-window t)      ; turn on focus follows mouse
+  (horizontal-scroll-bar-mode -1) ())               ; disable bottom scroll bar
+(tool-bar-mode -1)                                  ; disable tool bar
+(setq mouse-autoselect-window t)                    ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
-(savehist-mode 1) ; persist minibuffer history across sessions
-(setq savehist-file "~/.emacs.d/savehist") ; set file to save history
-(setq ring-bell-function 'ignore)     ; stop bell
-(global-flycheck-mode)                ; enable syntax checking
-(global-auto-revert-mode 1)           ; auto-refresh a changed file
+(desktop-save-mode 1)
+(savehist-mode 1)                                   ; persist minibuffer history across sessions
+(setq savehist-file "~/.emacs.d/savehist")          ; set file to save history
+(setq ring-bell-function 'ignore)                   ; stop bell
+(global-flycheck-mode)                              ; enable syntax checking
+(global-auto-revert-mode 1)                         ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
-(custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux"))
+(custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux")
+                      `(backup-directory-alist
+                        '((".*" . ,temporary-file-directory)))
+                      `(auto-save-file-name-transforms
+                        '((".*" ,temporary-file-directory t))))
 (add-to-list 'exec-path "~/Development/julia/julia")
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
@@ -354,21 +358,19 @@
 (defvaralias 'js-indent-level 'tab-width)
 (defvaralias ess-indent-level 'tab-width)
 
-; set directory to save backup files
-(setq backup-by-copying t
-      backup-directory-alist '(("." . "~/.saves"))
-      delete-old-versions t
-      kept-new-versions 6
-      kept-old-versions 2
-      version-control t)
+
+(setq backup-directory-alist
+      `((".*" . ,temporary-file-directory)))        ; 
 
 ; map F11 to fullscreen
 (global-set-key [f11] 'toggle-presentation)
 
 ; enable fullscreen by default on OSX
-(cond
- ((string-match "darwin" system-configuration)
-  (toggle-frame-fullscreen)))
+;(cond
+; ((string-match "darwin" system-configuration)
+;  (toggle-frame-fullscreen))
+; (t
+;  (toggle-frame-maximized)))
 
 ; Prevent annoying \"Active processes exist \" query on quit
 (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
