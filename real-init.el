@@ -27,6 +27,7 @@
 (require 'load-theme-buffer-local)
 (require 'neotree)
 (require 'org-funcs)
+(require 'pkg-devel)
 (require 'presentation)
 (require 'punctuality-logger)
 (require 'rainbow-delimiters)
