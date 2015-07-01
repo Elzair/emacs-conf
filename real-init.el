@@ -97,6 +97,7 @@
 (global-flycheck-mode)                              ; enable syntax checking
 (global-auto-revert-mode 1)                         ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
+(setq magit-last-seen-setup-instructions "1.4.0")   ; disable magit warning message
 (custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux")
                       `(backup-directory-alist
                         '((".*" . ,temporary-file-directory)))
