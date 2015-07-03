@@ -90,7 +90,6 @@
 (tool-bar-mode -1)                                  ; disable tool bar
 (setq mouse-autoselect-window t)                    ; turn on focus follows mouse
 (setq mouse-wheel-scroll-amount '(1 ((shift) . 1))) ; scroll one line at a time
-(desktop-save-mode 1)
 (savehist-mode 1)                                   ; persist minibuffer history across sessions
 (setq savehist-file "~/.emacs.d/savehist")          ; set file to save history
 (setq ring-bell-function 'ignore)                   ; stop bell

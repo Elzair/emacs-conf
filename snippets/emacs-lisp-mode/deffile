@@ -1,6 +1,6 @@
 # -*- mode: snippet; require-final-newline: nil -*-
-# name: defmod
-# key: defmod
+# name: deffile
+# key: deffile
 # binding: direct-keybinding
 # --
 ;;; `(file-name-nondirectory buffer-file-name)` --- ${1:brief-description} -*- lexical-binding: t -*-
@@ -8,9 +8,6 @@
 ;; Copyright © `(format-time-string "%Y")` Philip Woods
 
 ;; Author: Philip Woods <elzairthesorcerer@gmail.com>
-;; Version: 0.1
-;; Keywords: ${2:keywords}
-;; URL: ${3:http://gitlab.com/elzair/project}
 
 ;; This file is not part of GNU Emacs.
 
@@ -29,11 +26,11 @@
 
 ;;; Commentary:
 
-;; ${4:long-description}
+;; ${2:long-description}
 
 ;;; Code:
 
-$5
+$3
 
 (provide '`(file-name-base buffer-file-name)`)
 ;;; `(file-name-nondirectory buffer-file-name)` ends here$0
