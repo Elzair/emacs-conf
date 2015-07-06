@@ -31,11 +31,11 @@
 (defmacro with-beg-and-end (&rest body)
   "This macro defines the beginning and end of a region for the BODY code."
   `(let ((beg (if (> (point) (mark))
-                 (mark)
-                 (point)))
-        (end (if (>= (point) (mark))
-                 (point)
-                 (mark))))
+                  (mark)
+                  (point)))
+         (end (if (>= (point) (mark))
+                  (point)
+                  (mark))))
      ,@body))
 
 (defun evil-cmds-copy ()

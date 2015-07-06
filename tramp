@@ -1,14 +1,14 @@
-;; -*- emacs-lisp -*- <15/04/15 17:48:45 /home/elzair/.emacs.d/tramp>
+;; -*- emacs-lisp -*- <15/07/05 15:20:21 /home/elzair/.emacs.d/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; You can delete it, forcing Tramp to reapply the checks.
 
 ((["sudo" "root" "thinkpenguin.attlocal.net" nil nil]
-  ("uname" "Linux 3.19.3-3-ARCH")
+  ("locale" "LC_ALL=en_US.utf8")
+  ("uname" "Linux 4.0.5-1-ARCH")
   ("test" "test")
   ("remote-path"
    ("/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin"))
   ("remote-shell" "/bin/sh")
-  ("locale" "LC_ALL=en_US.utf8")
   ("readlink" "\\readlink")
   ("stat" "\\stat")
   ("file-exists" "test -e")
@@ -19,7 +19,9 @@
   ("perl-file-spec" t)
   ("perl-cwd-realpath" t)
   ("perl" "\\perl")
-  ("gvfs-monitor-dir" "/bin/gvfs-monitor-dir"))
+  ("git" "\\git")
+  ("gvfs-monitor-dir" "/bin/gvfs-monitor-dir")
+  ("ls" "/bin/ls --color=never"))
  (["sudo" "root" "thinkpenguin" nil nil]
   ("uname" "Linux 3.19.3-3-ARCH")
   ("test" "test")
