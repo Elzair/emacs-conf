@@ -28,6 +28,11 @@
 
 ;;; Code:
 
+(require 'neotree)
+
+(defvar evil-cmds-neotree-pushed-dir nil
+  "The neotree directory before `evil-cmds-edit-conf' was invoked.")
+
 (defmacro with-beg-and-end (&rest body)
   "This macro defines the beginning and end of a region for the BODY code."
   `(let ((beg (if (> (point) (mark))
@@ -50,6 +55,22 @@
     (with-beg-and-end
      (copy-region-as-kill beg end t)
      (delete-region beg end)))
+
+(defun evil-cmds-edit-conf ()
+  "My function for quickly editing Emacs config."
+  (interactive)
+  (setf evil-cmds-neotree-pushed-dir (file-name-directory (buffer-file-name)))
+  (neotree-dir user-emacs-directory)
+  (neo-open-file (concat user-emacs-directory "real-init.el")))
+
+(defun evil-cmds-save-conf ()
+  "My function for saving Emacs config."
+  (interactive)
+  (if (not (null evil-cmds-neotree-pushed-dir))
+      (neotree-dir evil-cmds-neotree-pushed-dir))
+  (setq evil-cmds-neotree-pushed-dir nil)
+  (kill-buffer "real-init.el")
+  (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push"))
 
 (provide 'evil-cmds)
 ;;; evil-cmds.el ends here

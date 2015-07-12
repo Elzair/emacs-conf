@@ -16,7 +16,6 @@
 (require 'ess-site)
 (require 'evil)
 (require 'evil-cmds)
-;(require 'evil-leader)
 (require 'evil-repl)
 (require 'evil-indent)
 (require 'flycheck)
@@ -35,40 +34,10 @@
 (require 'yasnippet)
 
 ; enable and configure vi emulation
-;(global-evil-leader-mode)
 (evil-mode 1)
 (setq key-chord-two-keys-delay 0.5)
 
 ; vim-style keybindings
-;(evil-leader/set-leader "-")
-;(evil-leader/set-key
-;  "e v" (lambda ()
-;          (interactive)
-;          (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
-;          (neotree-dir user-emacs-directory)
-;          (neo-open-file (concat user-emacs-directory "real-init.el")))
-;  "s v" (lambda ()
-;          (interactive)
-;          (neotree-dir neotree-pushed-dir)
-;          (setq neotree-pushed-dir nil)
-;          (kill-buffer "real-init.el")
-;          (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
-
-(defun my-edit-conf ()
-  "My function for quickly editing Emacs config."
-  (interactive)
-  (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
-  (neotree-dir user-emacs-directory)
-  (neo-open-file (concat user-emacs-directory "real-init.el")))
-
-(defun my-save-conf ()
-  "My function for saving Emacs config."
-  (interactive)
-  (neotree-dir neotree-pushed-dir)
-  (setq neotree-pushed-dir nil)
-  (kill-buffer "real-init.el")
-  (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push"))
-
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
 (key-chord-define evil-insert-state-map "jj" (lambda ()
@@ -76,18 +45,19 @@
                                                (right-char 1)))
 (define-key evil-visual-state-map "y" 'evil-cmds-copy)
 (define-key evil-visual-state-map "d" 'evil-cmds-cut)
+(evil-ex-define-cmd "ee" 'evil-cmds-edit-conf)
 (evil-ex-define-cmd "er" 'eval-region)
 (evil-ex-define-cmd "ev" 'eval-expression)
-(evil-ex-define-cmd "ee" 'my-edit-conf)
-(evil-ex-define-cmd "se" 'my-save-conf)
+(evil-ex-define-cmd "ff" 'find-function)
+(evil-ex-define-cmd "fv" 'find-variable)
 (evil-ex-define-cmd "hk" 'describe-key)
 (evil-ex-define-cmd "hf" 'describe-function)
 (evil-ex-define-cmd "hv" 'describe-variable)
-(evil-ex-define-cmd "ms" 'magit-status)
-(evil-ex-define-cmd "mc" 'magit-commit)
 (evil-ex-define-cmd "lb" 'list-buffers)
+(evil-ex-define-cmd "mc" 'magit-commit)
+(evil-ex-define-cmd "ms" 'magit-status)
 (evil-ex-define-cmd "sb" 'switch-to-buffer)
-(evil-ex-define-cmd "ex" 'execute-extended-command)
+(evil-ex-define-cmd "se" 'evil-cmds-save-conf)
 
 (define-minor-mode geiser-evil-mode
   "Geiser-Evil mode."
