@@ -16,7 +16,7 @@
 (require 'ess-site)
 (require 'evil)
 (require 'evil-cmds)
-(require 'evil-leader)
+;(require 'evil-leader)
 (require 'evil-repl)
 (require 'evil-indent)
 (require 'flycheck)
@@ -35,24 +35,40 @@
 (require 'yasnippet)
 
 ; enable and configure vi emulation
-(global-evil-leader-mode)
+;(global-evil-leader-mode)
 (evil-mode 1)
 (setq key-chord-two-keys-delay 0.5)
 
 ; vim-style keybindings
-(evil-leader/set-leader "-")
-(evil-leader/set-key
-  "e v" (lambda ()
-          (interactive)
-          (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
-          (neotree-dir user-emacs-directory)
-          (neo-open-file (concat user-emacs-directory "real-init.el")))
-  "s v" (lambda ()
-          (interactive)
-          (neotree-dir neotree-pushed-dir)
-          (setq neotree-pushed-dir nil)
-          (kill-buffer "real-init.el")
-          (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
+;(evil-leader/set-leader "-")
+;(evil-leader/set-key
+;  "e v" (lambda ()
+;          (interactive)
+;          (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
+;          (neotree-dir user-emacs-directory)
+;          (neo-open-file (concat user-emacs-directory "real-init.el")))
+;  "s v" (lambda ()
+;          (interactive)
+;          (neotree-dir neotree-pushed-dir)
+;          (setq neotree-pushed-dir nil)
+;          (kill-buffer "real-init.el")
+;          (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push")))
+
+(defun my-edit-conf ()
+  "My function for quickly editing Emacs config."
+  (interactive)
+  (setq neotree-pushed-dir (file-name-directory (buffer-file-name)))
+  (neotree-dir user-emacs-directory)
+  (neo-open-file (concat user-emacs-directory "real-init.el")))
+
+(defun my-save-conf ()
+  "My function for saving Emacs config."
+  (interactive)
+  (neotree-dir neotree-pushed-dir)
+  (setq neotree-pushed-dir nil)
+  (kill-buffer "real-init.el")
+  (shell-command "cd ~/.emacs.d && git add -A . && git commit -m 'Updated emacs config' && git pull && git push"))
+
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "ii" 'evil-normal-state)
 (key-chord-define evil-insert-state-map "jj" (lambda ()
@@ -62,6 +78,8 @@
 (define-key evil-visual-state-map "d" 'evil-cmds-cut)
 (evil-ex-define-cmd "er" 'eval-region)
 (evil-ex-define-cmd "ev" 'eval-expression)
+(evil-ex-define-cmd "ee" 'my-edit-conf)
+(evil-ex-define-cmd "se" 'my-save-conf)
 (evil-ex-define-cmd "hk" 'describe-key)
 (evil-ex-define-cmd "hf" 'describe-function)
 (evil-ex-define-cmd "hv" 'describe-variable)

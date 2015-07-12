@@ -6,7 +6,7 @@
                          ("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader ess flycheck flycheck-pos-tip geiser goto-chg haskell-mode j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-if org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
+(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil evil-leader ess flycheck flycheck-irony flycheck-pos-tip geiser goto-chg haskell-mode irony irony-eldoc j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-if org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
@@ -26,11 +26,6 @@ and install the package."
 
 (check-packages-and-install-missing-packages)
 
-; evaluate real init file
-(add-hook 'after-init-hook (lambda () (load "~/.emacs.d/real-init.el")))
-
-(provide 'init)
-;;; init.el ends here
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -55,3 +50,9 @@ and install the package."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+; evaluate real init file
+(add-hook 'after-init-hook (lambda () (load "~/.emacs.d/real-init.el")))
+
+(provide 'init)
+;;; init.el ends here
