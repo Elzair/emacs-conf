@@ -20,7 +20,7 @@
 (require 'evil-indent)
 (require 'flycheck)
 (require 'flyspell)
-(require 'gnu-apl-mode)
+;(require 'gnu-apl-mode)
 (require 'key-chord)
 (require 'frame-cmds)
 (require 'load-theme-buffer-local)
@@ -231,9 +231,9 @@
     "My j-mode-hook."
     (linum-mode))
 
-(defun my-gnu-apl-mode-hook ()
-    "My gnu-apl-mode-hook."
-    (linum-mode))
+;(defun my-gnu-apl-mode-hook ()
+;    "My gnu-apl-mode-hook."
+;    (linum-mode))
 
 (defun my-julia-mode-hook ()
     "My julia-mode-hook."
@@ -327,7 +327,7 @@
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'rust-mode-hook 'my-rust-mode-hook)
 (add-hook 'j-mode-hook 'my-j-mode-hook)
-(add-hook 'gnu-apl-mode-hook 'my-gnu-apl-mode-hook)
+;(add-hook 'gnu-apl-mode-hook 'my-gnu-apl-mode-hook)
 (add-hook 'julia-mode-hook 'my-julia-mode-hook)
 (add-hook 'octave-mode-hook 'my-octave-mode-hook)
 (add-hook 'c-mode-hook 'my-c-mode-hook)

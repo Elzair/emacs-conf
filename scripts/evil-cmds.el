@@ -30,7 +30,8 @@
 
 (require 'neotree)
 
-(defvar evil-cmds-neotree-pushed-dir nil
+(defvar evil-cmds-neotree-pushed-dir
+  (concat user-emacs-directory "..")
   "The neotree directory before `evil-cmds-edit-conf' was invoked.")
 
 (defmacro with-beg-and-end (&rest body)
@@ -59,7 +60,8 @@
 (defun evil-cmds-edit-conf ()
   "My function for quickly editing Emacs config."
   (interactive)
-  (setf evil-cmds-neotree-pushed-dir (file-name-directory (buffer-file-name)))
+  (when (not (null (buffer-file-name)))
+    (setf evil-cmds-neotree-pushed-dir (file-name-directory (buffer-file-name))))
   (neotree-dir user-emacs-directory)
   (neo-open-file (concat user-emacs-directory "real-init.el")))
 
