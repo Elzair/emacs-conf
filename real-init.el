@@ -95,7 +95,7 @@
 (setf org-format-latex-options
       (:foreground default
        :background default
-       :scale 1.5
+       :scale 1.25
        :html-foreground "Black"
        :html-background "Transparent"
        :html-scale 1.0
