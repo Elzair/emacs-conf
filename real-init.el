@@ -5,7 +5,6 @@
 
 ; set load path
 (add-to-list 'load-path "~/.emacs.d/scripts/")
-(add-to-list 'load-path "~/.emacs.d/gnu-apl-mode/")
 
 (package-initialize)
 
@@ -93,6 +92,14 @@
 (add-to-list 'exec-path "~/Development/julia/julia")
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
+(setf org-format-latex-options
+      (:foreground default
+       :background default
+       :scale 1.5
+       :html-foreground "Black"
+       :html-background "Transparent"
+       :html-scale 1.0
+       :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
 
 ; Configure org-babel
 (org-babel-do-load-languages
