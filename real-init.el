@@ -92,12 +92,8 @@
 (add-to-list 'exec-path "~/Development/julia/julia")
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
-(setf org-format-latex-options
-      (:scale 1.5
-       :html-foreground "Black"
-       :html-background "Transparent"
-       :html-scale 1.0
-       :matchers ("begin" "$1" "$" "$$" "\\(" "\\[")))
+(add-to-list org-format-latex-options '(: scale 1.5))
+
 
 ; Configure org-babel
 (org-babel-do-load-languages
