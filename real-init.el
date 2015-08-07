@@ -93,8 +93,7 @@
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
 (setf org-format-latex-options
-      (:background default
-       :scale 1.5
+      (:scale 1.5
        :html-foreground "Black"
        :html-background "Transparent"
        :html-scale 1.0
