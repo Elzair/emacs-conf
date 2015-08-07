@@ -92,7 +92,8 @@
 (add-to-list 'exec-path "~/Development/julia/julia")
 (setenv "JULIA_PKGDIR" (concat (getenv "HOME") "/Development/julia/pkg"))
 (setenv "GIT_SSH" (concat (getenv "HOME") "/.emacs.d/git_ssh_wrapper"))
-(add-to-list org-format-latex-options '(: scale 1.5))
+(setq org-format-latex-options
+      (plist-put org-format-latex-options ':scale 1.5))
 
 
 ; Configure org-babel
