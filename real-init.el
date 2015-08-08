@@ -63,6 +63,7 @@
   :keymap (make-sparse-keymap))
 
 (evil-set-initial-state 'org-present-mode 'emacs)   ; make `emacs-state' default state of `org-present-mode'
+(evil-set-initial-state 'sly-db-mode 'emacs)
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
