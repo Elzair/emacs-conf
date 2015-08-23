@@ -30,6 +30,7 @@
 ;;; Code:
 
 (require 'cl-lib)
+(require 'cl-seq)
 (require 'package)
 
 (defun pkg-devel-read-file (path)
