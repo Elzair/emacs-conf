@@ -88,7 +88,7 @@ Returns the file path to the new archive."
                                 (concat (file-name-as-directory new-dir)
                                         (file-name-nondirectory f)))
                             files))
-         (zip-files (mapcar* #'cons files new-files))
+         (zip-files (cl-mapcar #'cons files new-files))
          (rel-files (mapcar #'(lambda (f) (file-relative-name f path))
                             new-files)))
                                         ; Create directory name-version and copy files into it
