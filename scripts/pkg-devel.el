@@ -80,7 +80,7 @@
   "Create a tar archive of the package specified by NAME, VERSION and PATH.
 Returns the file path to the new archive."
   (let* ((dir       (concat path name))
-         (files     (directory-files dir t "^[^.]"))
+         (files     (directory-files dir t ".el$"))
          (new-name  (concat name "-" version))
          (new-dir   (concat path new-name))
          (new-files (mapcar #'(lambda (f)
