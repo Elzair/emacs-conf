@@ -5,7 +5,7 @@
 (setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
                          ("melpa" . "http://melpa.milkbox.net/packages/")))
 
-(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil ess flycheck flycheck-irony flycheck-pos-tip geiser glsl-mode goto-chg haskell-mode irony irony-eldoc j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-if org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
+(defvar package-list '(android-mode cider clojure-mode clojurescript-mode company company-c-headers company-irony company-quickhelp company-tern dash dockerfile-mode emmet-mode evil ess flycheck flycheck-irony flycheck-pos-tip geiser glsl-mode goto-chg haskell-mode irony irony-eldoc j-mode julia-mode load-theme-buffer-local magit markdown-mode neotree org org-present ox-reveal php-extras popup punctuality-logger puppet-mode quack racket-mode rainbow-delimiters rust-mode sly sly-company solarized-theme tern toml-mode undo-tree web-mode yaml-mode yasnippet)
   "List of installed packages.")
 
 (package-initialize) ;; Initialize packages
