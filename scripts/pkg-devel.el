@@ -29,7 +29,7 @@
 
 ;;; Code:
 
-(require 'cl)
+(require 'cl-lib)
 (require 'package)
 
 (defun pkg-devel-read-file (path)
