@@ -46,7 +46,7 @@ and install the package."
      (wl . wl-other-frame))))
  '(package-selected-packages
    (quote
-    (glsl-mode yasnippet yaml-mode web-mode toml-mode solarized-theme sly-company rust-mode rainbow-delimiters racket-mode quack puppet-mode punctuality-logger php-extras ox-reveal org-present org-if neotree markdown-mode magit load-theme-buffer-local julia-mode j-mode irony-eldoc haskell-mode geiser flycheck-pos-tip flycheck-irony evil-leader ess emmet-mode dockerfile-mode company-tern company-quickhelp company-irony company-c-headers clojurescript-mode cider android-mode)))
+    (org-if glsl-mode yasnippet yaml-mode web-mode toml-mode solarized-theme sly-company rust-mode rainbow-delimiters racket-mode quack puppet-mode punctuality-logger php-extras ox-reveal org-present neotree markdown-mode magit load-theme-buffer-local julia-mode j-mode irony-eldoc haskell-mode geiser flycheck-pos-tip flycheck-irony evil-leader ess emmet-mode dockerfile-mode company-tern company-quickhelp company-irony company-c-headers clojurescript-mode cider android-mode)))
  '(punctuality-logger-use-version-control t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

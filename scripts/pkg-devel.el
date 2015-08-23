@@ -80,7 +80,7 @@
   "Create a tar archive of the package specified by NAME, VERSION and PATH.
 Returns the file path to the new archive."
   (let* ((dir       (concat path name))
-         (files     (directory-files dir t "^[^.]"))        
+         (files     (directory-files dir t "^[^.]"))
          (new-name  (concat name "-" version))
          (new-dir   (concat path new-name))
          (new-files (mapcar #'(lambda (f)
@@ -110,7 +110,7 @@ Returns the file path to the new archive."
     (concat new-dir ".tar")))
 
 (defun pkg-devel-refresh (pkg-dir)
-    "Reinstall the package whose name is the directory of the current buffer."
+    "Reinstall the package whose name is the directory of the current buffer: PKG-DIR."
     (interactive "DPackage Directory: ")
     (let* ((pkg-dir-as-file (directory-file-name pkg-dir))
            (name            (file-name-nondirectory pkg-dir-as-file))
