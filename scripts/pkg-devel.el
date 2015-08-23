@@ -43,34 +43,34 @@
   "This function retrieves a list of all installed elisp packages."
   (mapcar #'(lambda (pkg)
               (car pkg))
-          (remove-if-not #'(lambda (pkg)
-                             (string-equal "installed"
-                                           (package-desc-status (car pkg))))
-                         (package-menu--refresh nil))))
+          (cl-remove-if-not #'(lambda (pkg)
+                                (string-equal "installed"
+                                              (package-desc-status (car pkg))))
+                            (package-menu--refresh nil))))
 
 (defun pkg-devel-get-package-desc (name &optional version)
   "This function outputs `package-desc' struct containing information on the package specified by NAME and VERSION."
   (let ((pkg-name (if (stringp version)
                       (concat name "-" version)
-                      name)))
-    (remove-if-not #'(lambda (pkg)
-                       (eq 0 (string-match pkg-name
-                                           (package-desc-full-name pkg))))
-                   (pkg-devel-get-installed-packages))))
+                    name)))
+    (cl-remove-if-not #'(lambda (pkg)
+                          (eq 0 (string-match pkg-name
+                                              (package-desc-full-name pkg))))
+                      (pkg-devel-get-installed-packages))))
 
 (defun pkg-devel-get-version (name path)
   "Get the version number for the package NAME at the given PATH."
   (let* ((dir       (concat path name))
          (files     (directory-files dir t "^[^.]"))
-         (el-files  (remove-if-not #'(lambda (f)
-                                       (string-equal "el"
-                                                     (file-name-extension f)))
-                                   files))
-         (mult-file (remove-if-not #'(lambda (f)
-                                       (string-equal (concat name
-                                                             "-pkg.el")
-                                                     (file-name-nondirectory f)))
-                                   el-files))
+         (el-files  (cl-remove-if-not #'(lambda (f)
+                                          (string-equal "el"
+                                                        (file-name-extension f)))
+                                      files))
+         (mult-file (cl-remove-if-not #'(lambda (f)
+                                          (string-equal (concat name
+                                                                "-pkg.el")
+                                                        (file-name-nondirectory f)))
+                                      el-files))
          (pkg-file  (expand-file-name (car mult-file) path))
          (contents  (pkg-devel-read-file pkg-file))
          (sexp      (car (read-from-string contents)))
@@ -91,12 +91,12 @@ Returns the file path to the new archive."
          (zip-files (mapcar* #'cons files new-files))
          (rel-files (mapcar #'(lambda (f) (file-relative-name f path))
                             new-files)))
-    ; Create directory name-version and copy files into it
+                                        ; Create directory name-version and copy files into it
     (make-directory new-dir)
     (mapc #'(lambda (z)
               (copy-file (car z) (cdr z) t))
           zip-files)
-    ; Use tar to create archive from new directory
+                                        ; Use tar to create archive from new directory
     (let ((command   (concat "cd "
                              path
                              "; tar -cf "
@@ -106,7 +106,7 @@ Returns the file path to the new archive."
                                         rel-files
                                         " "))))
       (shell-command command))
-    ; Delete new directory
+                                        ; Delete new directory
     (delete-directory new-dir t)
     (concat new-dir ".tar")))
 
