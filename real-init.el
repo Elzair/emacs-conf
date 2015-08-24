@@ -10,6 +10,7 @@
 
 ; require dependencies
 (require 'common-hooks)
+(require 'epa-file)
 (require 'ert)
 (require 'ess)
 (require 'ess-site)
@@ -65,6 +66,8 @@
 (evil-set-initial-state 'org-present-mode 'emacs)   ; make `emacs-state' default state of `org-present-mode'
 (evil-set-initial-state 'sly-db-mode 'emacs)
 (evil-set-initial-state 'diff-mode 'emacs)
+(evil-set-initial-state 'epa-key-list-mode 'emacs)
+(evil-set-initial-state 'epa-key-mode 'emacs)
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
@@ -86,6 +89,7 @@
 (global-auto-revert-mode 1)                         ; auto-refresh a changed file
 (setq auto-revert-verbose nil)
 (setq magit-last-seen-setup-instructions "1.4.0")   ; disable magit warning message
+(epa-file-enable)                                   ; enable EasyPG
 (custom-set-variables '(android-mode-sdk-dir "/opt/android-sdk-linux")
                       `(backup-directory-alist
                         '((".*" . ,temporary-file-directory)))
