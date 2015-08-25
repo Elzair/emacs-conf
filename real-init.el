@@ -68,6 +68,7 @@
 (evil-set-initial-state 'diff-mode 'emacs)
 (evil-set-initial-state 'epa-key-list-mode 'emacs)
 (evil-set-initial-state 'epa-key-mode 'emacs)
+(evil-set-initial-state 'ess-help-mode 'emacs)
 
 ; set default font and theme
 (set-default-font "Inconsolata LGC")
