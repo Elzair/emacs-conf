@@ -12,3 +12,6 @@ sessions/
 scripts/orientation.el
 init.fas
 init.lib
+.cask/
+*~
+network-security.data
