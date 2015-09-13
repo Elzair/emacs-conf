@@ -9,7 +9,10 @@
 (defun common-lispy-hooks ()
   "This function is useful for modes to edit Lisp code."
     (linum-mode)
-    (rainbow-delimiters-mode))
+    (rainbow-delimiters-mode)
+    (enable-paredit-mode)
+    (define-key evil-insert-state-local-map
+      (kbd "<tab>") 'paredit-forward))
 
 (defun common-comint-hooks ()
     "This function provides easier history access in comint modes."

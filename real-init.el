@@ -156,8 +156,7 @@
   "My geiser-repl-mode-hook."
   (require 'quack)
   (setq quack-fontify-style 'emacs)
-  (enable-paredit-mode)
-  (rainbow-delimiters-mode)
+  (common-lispy-hooks)
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
   (evil-repl-smart geiser-repl--newline-and-indent
@@ -166,12 +165,12 @@
 (defun my-racket-repl-mode-hook ()
     "My racket-repl-mode-hook."
     (font-lock-mode 1) ; rainbow-delimiters requires font-lock-mode
-    (rainbow-delimiters-mode))
+    (common-lispy-hooks))
 
 (defun my-cider-repl-mode-hook ()
   "My cider-repl-mode-hook."
   (setq cider-repl-use-clojure-font-lock t)
-  (rainbow-delimiters-mode)
+  (common-lispy-hooks)
   (evil-repl-smart cider-repl-newline-and-indent
                    cider-repl-return))
 
@@ -194,7 +193,6 @@
 
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
-  (enable-paredit-mode)
   (common-lispy-hooks))
 
 (defun my-geiser-mode-hook ()
