@@ -156,6 +156,7 @@
   "My geiser-repl-mode-hook."
   (require 'quack)
   (setq quack-fontify-style 'emacs)
+  (enable-paredit-mode)
   (rainbow-delimiters-mode)
   (setq geiser-repl-query-on-kill-p nil)
   (setq geiser-repl-use-other-window nil)
@@ -193,6 +194,7 @@
 
 (defun my-scheme-mode-hook ()
   "My scheme-mode-hook."
+  (enable-paredit-mode)
   (common-lispy-hooks))
 
 (defun my-geiser-mode-hook ()
