@@ -5,14 +5,16 @@
 
 (require 'rainbow-delimiters)
 (require 'evil-indent)
+(require 'sexp-move)
 
 (defun common-lispy-hooks ()
   "This function is useful for modes to edit Lisp code."
     (linum-mode)
     (rainbow-delimiters-mode)
-    (enable-paredit-mode)
     (define-key evil-insert-state-local-map
-      (kbd "<tab>") 'paredit-forward))
+      (kbd "<tab>") 'sexp-move-forward)
+    (define-key evil-insert-state-local-map
+      (kbd "C-<tab>") 'sexp-move-backward))
 
 (defun common-comint-hooks ()
     "This function provides easier history access in comint modes."
