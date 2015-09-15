@@ -3,7 +3,7 @@
 ;; Copyright © 2015 Philip Woods
 
 ;; Author: Philip Woods <elzairthesorcerer@gmail.com>
-;; Version: 0.2.0
+;; Version: 0.2.1
 ;; Keywords: sexp
 ;; URL: https://gitlab.com/elzair/sexp-move
 
@@ -87,6 +87,7 @@
 (puthash (intern "}")  #'sexp-move-single     *sexp-move-read-table*)
 (puthash (intern "'")  #'sexp-move-single     *sexp-move-read-table*)
 (puthash (intern ",")  #'sexp-move-single     *sexp-move-read-table*)
+(puthash (intern "`")  #'sexp-move-single     *sexp-move-read-table*)
 (puthash (intern ";")  #'sexp-move-single     *sexp-move-read-table*)
 (puthash (intern "\"") #'sexp-move-single     *sexp-move-read-table*)
 (puthash 'Cc           #'sexp-move-whitespace *sexp-move-read-table*)
